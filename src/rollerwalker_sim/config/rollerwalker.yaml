@@ -1,0 +1,87 @@
+rollerWalker:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+
+  # Position Controllers ---------------------------------------
+  # lf
+  joint_1_lf_trans:
+    type: position_controllers/JointPositionController
+    joint: body_to_joint_1_lf
+
+  joint_2_lf_trans:
+    type: position_controllers/JointPositionController
+    joint: joint_1_lf_to_joint_2_lf
+
+  joint_3_lf_trans:
+    type: position_controllers/JointPositionController
+    joint: link_2_lf_to_joint_3_lf
+
+  joint_4_lf_trans:
+    type: position_controllers/JointPositionController
+    joint: link_3_lf_to_joint_4_lf
+    
+
+  # lr
+  joint_1_lr_trans:
+    type: position_controllers/JointPositionController
+    joint: body_to_joint_1_lr
+    
+
+  joint_2_lr_trans:
+    type: position_controllers/JointPositionController
+    joint: joint_1_lr_to_joint_2_lr
+    
+
+  joint_3_lr_trans:
+    type: position_controllers/JointPositionController
+    joint: link_2_lr_to_joint_3_lr
+    
+
+  joint_4_lr_trans:
+    type: position_controllers/JointPositionController
+    joint: link_3_lr_to_joint_4_lr
+    
+
+  # rr
+  joint_1_rr_trans:
+    type: position_controllers/JointPositionController
+    joint: body_to_joint_1_rr
+    
+
+  joint_2_rr_trans:
+    type: position_controllers/JointPositionController
+    joint: joint_1_rr_to_joint_2_rr
+    
+
+  joint_3_rr_trans:
+    type: position_controllers/JointPositionController
+    joint: link_2_rr_to_joint_3_rr
+    
+
+  joint_4_rr_trans:
+    type: position_controllers/JointPositionController
+    joint: link_3_rr_to_joint_4_rr
+    
+
+  # rf
+  joint_1_rf_trans:
+    type: position_controllers/JointPositionController
+    joint: body_to_joint_1_rf
+    
+
+  joint_2_rf_trans:
+    type: position_controllers/JointPositionController
+    joint: joint_1_rf_to_joint_2_rf
+    
+
+  joint_3_rf_trans:
+    type: position_controllers/JointPositionController
+    joint: link_2_rf_to_joint_3_rf
+    
+
+  joint_4_rf_trans:
+    type: position_controllers/JointPositionController
+    joint: link_3_rf_to_joint_4_rf
+    
