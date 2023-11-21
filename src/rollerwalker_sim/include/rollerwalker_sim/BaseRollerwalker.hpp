@@ -41,10 +41,10 @@
 /// 
 /// </summary>
 
-class BaseRollerWalker
+class BaseRollerwalker
 {
 public:
-	BaseRollerWalker(double d_0, double theta_0, double omega, double phi,  double phi_fr, double center_z, bool is_rollerWalk);
+	BaseRollerwalker(double d_0, double theta_0, double omega, double phi,  double phi_fr, double center_z, bool is_rollerWalk);
     void calAndSetTheta(double t);	//各関節の値の計算、set
 	//各脚の関節の値のゲッター
 	//左前脚

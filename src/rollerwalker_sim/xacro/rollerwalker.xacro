@@ -1,4 +1,4 @@
-<robot name="rollerWalker" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="rollerwalker" xmlns:xacro="http://ros.org/wiki/xacro">
     <!-- 色の定義 -->
     <material name="red">
         <color rgba="0.9 0.2 0.2 1.0"/>
@@ -659,7 +659,7 @@
 
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/rollerWalker</robotNamespace>
+            <robotNamespace>/rollerwalker</robotNamespace>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
             <legacyModeNS>true</legacyModeNS>
         </plugin>

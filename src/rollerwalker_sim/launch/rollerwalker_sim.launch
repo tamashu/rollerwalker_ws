@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <arg name="model" default="$(find vis_lecture)/xacro/rollerWalker_gazebo.xacro" />
-  <arg name="rvizconfig" default="$(find vis_lecture)/rviz/rollerWalker.rviz" />
+  <arg name="model" default="$(find rollerwalker_sim)/xacro/rollerwalker.xacro" />
 
-  <!-- gazeboの起動 -->
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="paused" value="false"/>
+  gazeboの起動
+  <!-- <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
-  </include>
+  </include> -->
 
   <!-- ロボットモデルをrobot_descriptionにload -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model) --inorder"/>
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerWalker" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker" />
 
   
   <!-- コントローラの起動 -->
-  <rosparam file="$(find vis_lecture)/config/rollerwalker_pid.yaml" command="load"/>
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/rollerWalker" 
+  <!-- <rosparam file="$(find rollerwalker_sim)/config/rollerwalker.yaml" command="load"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/rollerwalker" 
       args="joint_state_controller joint_1_lf_trans joint_2_lf_trans joint_3_lf_trans joint_4_lf_trans
                                    joint_1_lr_trans joint_2_lr_trans joint_3_lr_trans joint_4_lr_trans
                                    joint_1_rr_trans joint_2_rr_trans joint_3_rr_trans joint_4_rr_trans
                                    joint_1_rf_trans joint_2_rf_trans joint_3_rf_trans joint_4_rf_trans" />
                                    
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-        <remap from="/joint_states" to="/rollerWalker/joint_states" />
-  </node>
+        <remap from="/joint_states" to="/rollerwalker/joint_states" />
+  </node> -->
 
   <!-- ドライバーの起動（速度司令） -->
-  <node name="rollerwalker_driver" pkg="rollerwalker_sim" type="rollerwalker_driver"/>
+  <node name="rollerwalker_driver" pkg="rollerwalker_sim" type="rollerwalker_driver" output="screen"/>
 
   <!-- RVIZ -->
   <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->

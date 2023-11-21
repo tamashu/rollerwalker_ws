@@ -207,7 +207,7 @@ include
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-add_executable(rollerwalker_driver src/rollerwalker_driver.cpp)
+add_executable(rollerwalker_driver src/RollerwalkerDriver.cpp)
 add_library(BaseRollerwalker src/BaseRollerwalker.cpp)
 
 target_link_libraries(rollerwalker_driver
