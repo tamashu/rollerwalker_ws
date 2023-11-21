@@ -85,3 +85,19 @@ rollerwalker:
     type: position_controllers/JointPositionController
     joint: link_3_rf_to_joint_4_rf
     
+  #wheel
+  wheel_lf_trans:
+    type: position_controllers/JointPositionController
+    joint: link_4_lf_to_wheel_lf
+  
+  wheel_lr_trans:
+    type: position_controllers/JointPositionController
+    joint: link_4_lr_to_wheel_lr
+  
+  wheel_rr_trans:
+    type: position_controllers/JointPositionController
+    joint: link_4_rr_to_wheel_rr
+  
+  wheel_rf_trans:
+    type: position_controllers/JointPositionController
+    joint: link_4_rf_to_wheel_rf

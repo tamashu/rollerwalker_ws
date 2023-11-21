@@ -12,22 +12,22 @@ RollerwalkerDriver::RollerwalkerDriver(double d_0, double theta_0, double omega,
     //トピック名の設定
     for(int i=0;i<rollerwalker_joints_pub_lf_.size();i++){   //lf
         std::stringstream topic_name;
-        topic_name << "/rollerwalker/joint" << i + 1 << "lf_trans/command";
+        topic_name << "/rollerwalker/joint_" << i + 1 << "_lf_trans/command";
         rollerwalker_joints_pub_lf_[i] = nh_.advertise<std_msgs::Float64>(topic_name.str(), 10);
     }
     for(int i=0;i<rollerwalker_joints_pub_lr_.size();i++){   //lr
         std::stringstream topic_name;
-        topic_name << "/rollerwalker/joint" << i + 1 << "lr_trans/command";
+        topic_name << "/rollerwalker/joint_" << i + 1 << "_lr_trans/command";
         rollerwalker_joints_pub_lr_[i] = nh_.advertise<std_msgs::Float64>(topic_name.str(), 10);
     }
     for(int i=0;i<rollerwalker_joints_pub_rr_.size();i++){   //rr
         std::stringstream topic_name;
-        topic_name << "/rollerwalker/joint" << i + 1 << "rr_trans/command";
+        topic_name << "/rollerwalker/joint_" << i + 1 << "_rr_trans/command";
         rollerwalker_joints_pub_rr_[i] = nh_.advertise<std_msgs::Float64>(topic_name.str(), 10);
     }
     for(int i=0;i<rollerwalker_joints_pub_rf_.size();i++){   //rf
         std::stringstream topic_name;
-        topic_name << "/rollerwalker/joint" << i + 1 << "rf_trans/command";
+        topic_name << "/rollerwalker/joint_" << i + 1 << "_rf_trans/command";
         rollerwalker_joints_pub_rf_[i] = nh_.advertise<std_msgs::Float64>(topic_name.str(), 10);
     }
 }

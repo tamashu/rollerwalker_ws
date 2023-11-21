@@ -356,17 +356,6 @@
             <!-- <limit lower="-1.79769e+308" upper="1.79769e+308" effort="0" velocity="0"/> -->
         </joint>
 
-        <!-- ジョイント3のトランスミッション -->
-        <transmission name="wheel_trans" >
-            <type>transmission_interface/SimpleTransmission</type>
-            <actuator name="$wheel_motor">
-                <mechanicalReduction>1</mechanicalReduction>
-            </actuator>
-            <joint name="link_4_${leg_posi}_to_wheel_${leg_posi}">
-                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-            </joint>
-         </transmission>
-
         <!-- ホイールの描画 -->
         <link name = "wheel_${leg_posi}">
             <inertial>
@@ -427,6 +416,17 @@
                 <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             </joint>
          </transmission>
+
+        <!-- ホイールのトランスミッション  -->
+        <transmission name="wheel_trans" >
+            <type>transmission_interface/SimpleTransmission</type>
+            <actuator name="$wheel_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+            <joint name="link_4_${leg_posi}_to_wheel_${leg_posi}">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+        </transmission>
 
 
     </xacro:macro>  
