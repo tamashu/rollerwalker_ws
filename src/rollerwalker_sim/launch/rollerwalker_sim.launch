@@ -2,10 +2,11 @@
 <launch>
   <arg name="model" default="$(find rollerwalker_sim)/xacro/rollerwalker.xacro" />
   <arg name="rvizconfig" default="$(find rollerwalker_sim)/rviz/rollerwalker.rviz" />
+  <arg name="is_paused" default="false" />
 
   <!-- gazeboの起動 -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="paused" value="false"/>
+    <arg name="paused" value="$(arg is_paused)"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
     <arg name="headless" value="false"/>
@@ -30,10 +31,12 @@
         <remap from="/joint_states" to="/rollerwalker/joint_states" />
   </node>
 
+  <!-- キーボード操作 -->
+  <node name="my_teleop_key_board" pkg="rollerwalker_sim" type="my_teleop_twist_keyboard"/>
   <!-- ドライバーの起動（速度司令） -->
   <node name="rollerwalker_driver" pkg="rollerwalker_sim" type="rollerwalker_driver" output="screen"/>
 
   <!-- RVIZ -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
   
 </launch>

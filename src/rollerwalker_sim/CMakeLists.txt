@@ -208,8 +208,12 @@ include
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 add_executable(rollerwalker_driver src/RollerwalkerDriver.cpp)
+add_executable(my_teleop_twist_keyboard src/my_teleop_twist_keyboard.cpp)
 add_library(BaseRollerwalker src/BaseRollerwalker.cpp)
 
 target_link_libraries(rollerwalker_driver
   ${catkin_LIBRARIES} BaseRollerwalker
+)
+target_link_libraries(my_teleop_twist_keyboard
+  ${catkin_LIBRARIES} 
 )

@@ -30,6 +30,18 @@ RollerwalkerDriver::RollerwalkerDriver(double d_0, double theta_0, double omega,
         topic_name << "/rollerwalker/joint_" << i + 1 << "_rf_trans/command";
         rollerwalker_joints_pub_rf_[i] = nh_.advertise<std_msgs::Float64>(topic_name.str(), 10);
     }
+
+    //start_flagの設定
+    is_start_flag_ = false;
+    is_start_flag_sub_ = nh_.subscribe("/is_start_flag", 2, &RollerwalkerDriver::isStartCallback_, this);
+}
+
+void RollerwalkerDriver::isStartCallback_(const std_msgs::Bool& msg)
+{
+  is_start_flag_ = msg.data;
+}
+bool RollerwalkerDriver::getIsStartFlag_(){
+    return is_start_flag_;
 }
 
 void RollerwalkerDriver::jointsPublish_(double t){
@@ -98,11 +110,15 @@ int main(int argc, char** argv)
     RollerwalkerDriver rollerwalker_driver(d_0, theta_0, omega, phi, phi_fr, center_z , is_rollerWalk);
     ros::Rate loop_rate(10);
     int count = 0;
+    double t =0.0;
     while (ros::ok())
     {   
-        count++;
-        double t = (double)count/10.0;
-        ROS_INFO("time: %f",t);
+        if(rollerwalker_driver.getIsStartFlag_()){
+            count++;
+            t = (double)count/10.0;
+        }
+        
+        // ROS_INFO("time: %f",t);
         rollerwalker_driver.jointsPublish_(t);
         //ROS_INFO("time:t: %.2f  ",t );
         ros::spinOnce();
