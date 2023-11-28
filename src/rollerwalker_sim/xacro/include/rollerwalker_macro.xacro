@@ -22,8 +22,8 @@
     <!-- 各パラメータ -->
     <!-- 各リンクの重量設定 -->
     <xacro:property name="total_mass" value="23.8" />
-    <xacro:property name="body_mass" value="${total_mass*2/3}" />
-    <xacro:property name="leg_mass" value="${total_mass/3}" />
+    <xacro:property name="body_mass" value="${total_mass/3}" />
+    <xacro:property name="leg_mass" value="${total_mass*2/3}" />
     <xacro:property name="joint_1_mass" value="1.0" />
     <xacro:property name="joint_2_mass" value="1.0" />
     <xacro:property name="joint_3_mass" value="1.0" />
@@ -89,10 +89,6 @@
     <xacro:property name="I_joint_4_yy" value="${joint_4_mass*(joint_4_radius * joint_4_radius/4 + joint_4_thickness * joint_4_thickness / 12)}" />     <!--M(R^2/4+h^2/12)-->
     <xacro:property name="I_joint_4_zz" value="${joint_4_mass* joint_4_radius * joint_4_radius/2}" />                                                  <!--1/2MR^2-->
 
-    <!-- 摩擦力 -->
-    <xacro:property name="mu_1" value="0.417" />    
-    <xacro:property name="mu_2" value="0.0264" />    
-
     <!-- 各足の長さはlink_n_xの値を変えれば良い -->
     <!-- リンク2関連 -->
     <xacro:property name="link_2_x" value="0.2" />
@@ -130,4 +126,14 @@
     <xacro:property name="link_3_to_joint_4_damping" value="0.1" />   <!-- リンク3からジョイント4のダンピング係数 -->
     <xacro:property name="joint_4_to_link_4_damping" value="0.1" />   <!-- ジョイント4からリンク4のダンピング係数 -->
     <xacro:property name="link_4_to_wheel_damping" value="0.1" />   <!-- リンク4からホイールのダンピング係数 -->
+
+        <!-- 摩擦力 -->
+    <xacro:property name="mu_1" value="0.417" />    
+    <xacro:property name="mu_2" value="0.0264" />   
+    <xacro:property name="mu_1" value="0.417" />    
+    <xacro:property name="mu_2" value="0.0264" />    
+
+    <!-- めり込み係数 -->
+    <xacro:property name="kp" value="100000" />
+
 </robot>

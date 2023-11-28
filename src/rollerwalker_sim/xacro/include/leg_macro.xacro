@@ -53,6 +53,8 @@
         </link>
         <gazebo reference="joint_1_${leg_posi}">
             <material>Gazebo/Blue</material>
+            <!-- <kp value="${kp}" /> -->
+            <!-- <kd value="10" /> -->
         </gazebo>
 
         <!-- ジョイント１とジョイント２の設定 -->
@@ -89,6 +91,8 @@
         </link>
         <gazebo reference="joint_2_${leg_posi}">
             <material>Gazebo/Green</material>
+            <!-- <kp value="${kp}" /> -->
+            <!-- <kd value="10" /> -->
         </gazebo>
 
         <!-- ジョイント２とリンク２の設定 -->
@@ -160,6 +164,8 @@
         </link>
         <gazebo reference="joint_3_${leg_posi}">
             <material>Gazebo/Yellow</material>
+            <!-- <kp value="${kp}" /> -->
+            <!-- <kd value="10" /> -->
         </gazebo>
 
 
@@ -194,6 +200,8 @@
         </link>
         <gazebo reference="link_3_${leg_posi}">
             <material>Gazebo/White</material>
+            <!-- <kp value="${kp}" /> -->
+            <!-- <kd value="10" /> -->
         </gazebo>
 
         <!-- リンク3とジョイント4の設定 -->
@@ -231,6 +239,8 @@
         </link>
         <gazebo reference="joint_4_${leg_posi}">
             <material>Gazebo/Yellow</material>
+            <!-- <kp value="${kp}" /> -->
+            <!-- <kd value="10" /> -->
         </gazebo>
 
 
@@ -265,6 +275,8 @@
         </link>
         <gazebo reference="link_4_${leg_posi}">
             <material>Gazebo/Red</material>
+            <!-- <kp value="${kp}" /> -->
+            <!-- <kd value="10" /> -->
         </gazebo>
 
 
@@ -303,6 +315,8 @@
             <material>Gazebo/Blue</material>
             <mu1>${mu_1}</mu1>
             <mu2>${mu_2}</mu2>
+            <!-- <kp value="${kp}" /> -->
+            <!-- <kd value="10" /> -->
         </gazebo>
 
         <!-- トランスミッション -->
@@ -312,7 +326,7 @@
               <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="body_to_joint_1_${leg_posi}">
-                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
         </transmission>
         <!-- ジョイント2のトランスミッション -->
@@ -322,7 +336,7 @@
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="joint_1_${leg_posi}_to_joint_2_${leg_posi}">
-                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
         </transmission>
 
@@ -333,7 +347,7 @@
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="link_2_${leg_posi}_to_joint_3_${leg_posi}">
-                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
          </transmission>
 
@@ -344,7 +358,7 @@
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="link_3_${leg_posi}_to_joint_4_${leg_posi}">
-                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
          </transmission>
 
@@ -355,7 +369,7 @@
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="link_4_${leg_posi}_to_wheel_${leg_posi}">
-                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
         </transmission>
     </xacro:macro>  
