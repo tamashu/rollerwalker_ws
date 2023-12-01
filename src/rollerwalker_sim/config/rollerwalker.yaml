@@ -48,7 +48,7 @@ rollerwalker:
   joint_3_lr_trans:
     type: effort_controllers/JointPositionController
     joint: link_2_lr_to_joint_3_lr
-    pid: {p: 2.0, i: 1.0,   d: 0.1, i_clamp_min: -1.0, i_clamp_max: 1.0}
+    pid: {p: 1000.0, i: 10.0, d: 1.0}
     publish_rate: 10  
 
   joint_4_lr_trans:
@@ -109,25 +109,25 @@ rollerwalker:
 
   #wheel
   wheel_lf_trans:
-    type: effort_controllers/JointPositionController
+    type: velocity_controllers/JointPositionController
     joint: link_4_lf_to_wheel_lf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 
   
   wheel_lr_trans:
-    type: effort_controllers/JointPositionController
+    type: velocity_controllers/JointPositionController
     joint: link_4_lr_to_wheel_lr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 
   
   wheel_rr_trans:
-    type: effort_controllers/JointPositionController
+    type: velocity_controllers/JointPositionController
     joint: link_4_rr_to_wheel_rr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 
   
   wheel_rf_trans:
-    type: effort_controllers/JointPositionController
+    type: velocity_controllers/JointPositionController
     joint: link_4_rf_to_wheel_rf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 

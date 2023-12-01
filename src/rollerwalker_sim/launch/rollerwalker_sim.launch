@@ -15,7 +15,7 @@
 
   <!-- ロボットモデルをrobot_descriptionにload -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model) --inorder"/>
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker -z 0.2" />
 
   
   <!-- コントローラの起動 -->
@@ -37,6 +37,6 @@
   <node name="rollerwalker_driver" pkg="rollerwalker_sim" type="rollerwalker_driver" output="screen"/>
 
   <!-- RVIZ -->
-  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
   
 </launch>

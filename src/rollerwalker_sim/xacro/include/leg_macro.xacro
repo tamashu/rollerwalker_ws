@@ -10,22 +10,22 @@
             <!-- lf -->
             <xacro:if value="${leg_posi=='lf'}">
                 <origin xyz="${body_length/2 - joint_1_radius/2} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 0"/>
-                <limit lower="0.2" upper="3" effort="100" velocity="100"/>    
+                <limit lower="0.2" upper="3" effort="${effort_limit}" velocity="100"/>    
             </xacro:if>
             <!-- lr -->
             <xacro:if value="${leg_posi=='lr'}">
                 <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 0"/>
-                <limit lower="0.2" upper="3" effort="100" velocity="100"/>    
+                <limit lower="0.2" upper="3" effort="${effort_limit}" velocity="100"/>    
             </xacro:if>
             <!-- rr -->
             <xacro:if value="${leg_posi=='rr'}">
                 <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 0"/>
-                <limit lower="-3" upper="-0.2" effort="100" velocity="100"/>
+                <limit lower="-3" upper="-0.2" effort="${effort_limit}" velocity="100"/>
             </xacro:if>
             <!-- rf -->
             <xacro:if value="${leg_posi=='rf'}">
                 <origin xyz="${body_length/2 - joint_1_radius/2} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 0"/>
-                <limit lower="-3" upper="-0.2" effort="100" velocity="100"/>
+                <limit lower="-3" upper="-0.2" effort="${effort_limit}" velocity="100"/>
             </xacro:if>
             
             <dynamics damping="${body_to_joint_1_damping}"/>
@@ -64,7 +64,7 @@
             <child  link="joint_2_${leg_posi}"/>
             <origin rpy="1.57070 0 0" xyz="0 0 0"/>
             <dynamics damping="${joint_1_to_joint_2_damping}"/>
-            <limit lower="-1.5" upper="1.5" effort="100" velocity="100"/>
+            <limit lower="-1.5" upper="1.5" effort="${effort_limit}" velocity="100"/>
         </joint>
 
 
@@ -136,7 +136,7 @@
             <child  link="joint_3_${leg_posi}"/>
             <origin rpy="1.57070 0 0" xyz="${link_2_x} 0 0"/>
             <dynamics damping="${link_2_to_joint_3_damping}"/>
-            <limit lower="-2.0" upper="1.5" effort="100" velocity="100"/>
+            <limit lower="-2.0" upper="1.5" effort="${effort_limit}" velocity="100"/>
         </joint>
 
    
@@ -211,7 +211,7 @@
             <child  link="joint_4_${leg_posi}"/>
             <origin rpy="1.57070 0 0" xyz="${link_3_x} 0 0"/>
             <dynamics damping="${link_3_to_joint_4_damping}"/>
-            <limit lower="-2.0" upper="1.5" effort="100" velocity="100"/>
+            <limit lower="-2.0" upper="1.5" effort="${effort_limit}" velocity="100"/>
         </joint>
 
         
@@ -315,6 +315,7 @@
             <material>Gazebo/Blue</material>
             <mu1>${mu_1}</mu1>
             <mu2>${mu_2}</mu2>
+            <!-- <fdir>0 0 1</fdir> -->
             <!-- <kp value="${kp}" /> -->
             <!-- <kd value="10" /> -->
         </gazebo>
@@ -369,7 +370,7 @@
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="link_4_${leg_posi}_to_wheel_${leg_posi}">
-                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
             </joint>
         </transmission>
     </xacro:macro>  
