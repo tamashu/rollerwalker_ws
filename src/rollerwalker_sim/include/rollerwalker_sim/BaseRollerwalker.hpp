@@ -46,6 +46,7 @@ class BaseRollerwalker
 public:
 	BaseRollerwalker(double d_0, double theta_0, double omega, double phi,  double phi_fr, double center_z, bool is_rollerWalk);
     void calAndSetTheta(double t);	//各関節の値の計算、set
+	double getOmega();	//omegaのゲッタ
 	//各脚の関節の値のゲッター
 	//左前脚
 	double getTheta1LF();	//関節1

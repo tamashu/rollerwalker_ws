@@ -8,103 +8,103 @@ rollerwalker:
   # lf
   joint_1_lf_trans:
     type: effort_controllers/JointPositionController
-    joint: body_to_joint_1_lf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_1_lf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_2_lf_trans:
     type: effort_controllers/JointPositionController
-    joint: joint_1_lf_to_joint_2_lf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_2_lf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_3_lf_trans:
     type: effort_controllers/JointPositionController
-    joint: link_2_lf_to_joint_3_lf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_3_lf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_4_lf_trans:
     type: effort_controllers/JointPositionController
-    joint: link_3_lf_to_joint_4_lf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_4_lf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
     
 
   # lr
   joint_1_lr_trans:
     type: effort_controllers/JointPositionController
-    joint: body_to_joint_1_lr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_1_lr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
     
 
   joint_2_lr_trans:
     type: effort_controllers/JointPositionController
-    joint: joint_1_lr_to_joint_2_lr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_2_lr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_3_lr_trans:
     type: effort_controllers/JointPositionController
-    joint: link_2_lr_to_joint_3_lr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_3_lr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_4_lr_trans:
     type: effort_controllers/JointPositionController
-    joint: link_3_lr_to_joint_4_lr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_4_lr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   # rr
   joint_1_rr_trans:
     type: effort_controllers/JointPositionController
-    joint: body_to_joint_1_rr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_1_rr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_2_rr_trans:
     type: effort_controllers/JointPositionController
-    joint: joint_1_rr_to_joint_2_rr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_2_rr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_3_rr_trans:
     type: effort_controllers/JointPositionController
-    joint: link_2_rr_to_joint_3_rr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_3_rr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_4_rr_trans:
     type: effort_controllers/JointPositionController
-    joint: link_3_rr_to_joint_4_rr
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_4_rr
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   # rf
   joint_1_rf_trans:
     type: effort_controllers/JointPositionController
-    joint: body_to_joint_1_rf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_1_rf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10  
 
   joint_2_rf_trans:
     type: effort_controllers/JointPositionController
-    joint: joint_1_rf_to_joint_2_rf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_2_rf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10 
 
   joint_3_rf_trans:
     type: effort_controllers/JointPositionController
-    joint: link_2_rf_to_joint_3_rf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_3_rf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10 
 
   joint_4_rf_trans:
     type: effort_controllers/JointPositionController
-    joint: link_3_rf_to_joint_4_rf
-    pid: {p: 1000.0, i: 10.0, d: 1.0}
+    joint: joint_4_rf
+    pid: {p: 800.0, i: 8.0, d: 1.0}
     publish_rate: 10 
 
   #wheel
