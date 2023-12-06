@@ -128,9 +128,9 @@
     <xacro:property name="link_4_to_wheel_damping"    value="0.1" />   <!-- リンク4からホイールのダンピング係数 -->
 
         <!-- 摩擦力 -->
-    <!-- <xacro:property name="mu_1" value="0.417" />    
+    <!-- <xacro:property name="mu" value="0.417" />    
     <xacro:property name="mu_2" value="0.0264" />    -->
-    <xacro:property name="mu_1" value="0.417" />    
+    <xacro:property name="mu" value="0.0264" />    
     <xacro:property name="mu_2" value="0.417" />    
 
     <!-- めり込み係数 -->

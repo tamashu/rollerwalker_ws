@@ -109,25 +109,25 @@ rollerwalker:
 
   #wheel
   wheel_lf_trans:
-    type: velocity_controllers/JointPositionController
+    type: effort_controllers/JointPositionController
     joint: link_4_lf_to_wheel_lf
     pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 
   
   wheel_lr_trans:
-    type: velocity_controllers/JointPositionController
+    type: effort_controllers/JointPositionController
     joint: link_4_lr_to_wheel_lr
     pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 
   
   wheel_rr_trans:
-    type: velocity_controllers/JointPositionController
+    type: effort_controllers/JointPositionController
     joint: link_4_rr_to_wheel_rr
     pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 
   
   wheel_rf_trans:
-    type: velocity_controllers/JointPositionController
+    type: effort_controllers/JointPositionController
     joint: link_4_rf_to_wheel_rf
     pid: {p: 0.0, i: 0.0, d: 0.0}
     publish_rate: 10 

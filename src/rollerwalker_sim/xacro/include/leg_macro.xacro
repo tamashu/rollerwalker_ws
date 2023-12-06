@@ -198,9 +198,21 @@
         </link>
         <gazebo reference="wheel_${leg_posi}">
             <material>Gazebo/Blue</material>
-            <mu1>${mu_1}</mu1>
+            <mu>${mu}</mu>
             <mu2>${mu_2}</mu2>
-            <!-- <fdir>0 0 0</fdir> -->
+            <fdir>0 0 1</fdir>
+            <!-- <xacro:if value="${leg_posi=='lf'}">
+                <fdir>1 0 0</fdir>
+            </xacro:if>
+            <xacro:if value="${leg_posi=='lr'}">
+                <fdir>1 0 0</fdir>
+            </xacro:if>
+            <xacro:if value="${leg_posi=='rr'}">
+                <fdir>-1 0 0</fdir>
+            </xacro:if>
+            <xacro:if value="${leg_posi=='rf'}">
+                <fdir>-1 0 0</fdir>
+            </xacro:if> -->
             <!-- <kp value="${kp}" /> -->
             <!-- <kd value="10" /> -->
         </gazebo>
@@ -255,7 +267,7 @@
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="link_4_${leg_posi}_to_wheel_${leg_posi}">
-                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
         </transmission>
     </xacro:macro>  
