@@ -3,9 +3,9 @@
      <!-- 脚のマクロ -->
     <xacro:macro name="leg_macro" params="leg_posi">
         <!-- ジョイント1-->
-        <joint name="body_to_joint_1_${leg_posi}" type="revolute">
+        <joint name="joint_1_${leg_posi}" type="revolute">
             <parent link="body"/>
-            <child  link="joint_1_${leg_posi}"/>
+            <child  link="joint_1_link_${leg_posi}"/>
             <axis xyz="0 0 1"/>
             <!-- lf -->
             <xacro:if value="${leg_posi=='lf'}">
@@ -28,10 +28,10 @@
                 <limit lower="-3" upper="-0.2" effort="${effort_limit}" velocity="100"/>
             </xacro:if>
             
-            <dynamics damping="${body_to_joint_1_damping}"/>
+            <dynamics damping="${joint_1_damping}"/>
         </joint>
 
-        <link name = "joint_1_${leg_posi}">
+        <link name = "joint_1_link_${leg_posi}">
             <inertial>
                 <mass value="${joint_1_mass}"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -51,59 +51,22 @@
                 </geometry>
             </collision>
         </link>
-        <gazebo reference="joint_1_${leg_posi}">
+        <gazebo reference="joint_1_link_${leg_posi}">
             <material>Gazebo/Blue</material>
             <!-- <kp value="${kp}" /> -->
             <!-- <kd value="10" /> -->
         </gazebo>
 
-        <!-- ジョイント１とジョイント２の設定 -->
-        <joint name="joint_1_${leg_posi}_to_joint_2_${leg_posi}" type="revolute">
-            <axis xyz="0 0 1"/>
-            <parent link="joint_1_${leg_posi}"/>
-            <child  link="joint_2_${leg_posi}"/>
-            <origin rpy="1.57070 0 0" xyz="0 0 0"/>
+        <!-- ジョイント２の設定 -->
+        <joint name="joint_2_${leg_posi}" type="revolute">
+            <axis xyz="0 -1 0"/>
+            <parent link="joint_1_link_${leg_posi}"/>
+            <child  link="link_2_${leg_posi}"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <dynamics damping="${joint_1_to_joint_2_damping}"/>
             <limit lower="-1.5" upper="1.5" effort="${effort_limit}" velocity="100"/>
         </joint>
 
-
-        <!-- ジョイント２の描画 -->
-        <link name = "joint_2_${leg_posi}">
-            <inertial>
-                <mass value="${joint_2_mass}"/>
-                <origin xyz="${joint_1_radius/2} 0 0.0" rpy="0 0 0"/> 
-                <inertia ixx="${I_joint_2_xx}" ixy="0.0" ixz="0.0" iyy="${I_joint_2_yy}" iyz="0.0" izz="${I_joint_2_zz}"/>
-            </inertial>
-            <visual>
-                <geometry>
-                    <cylinder radius="${joint_2_radius}" length="${joint_2_thickness}"/> 
-                </geometry>
-                <origin xyz="${joint_1_radius/2} 0 0.0" rpy="0 0 0"/> 
-                <material name = "green"/>
-            </visual>
-            <collision>
-                <origin xyz="${joint_1_radius/2} 0 0.0" rpy="0 0 0"/> 
-                <geometry>
-                    <cylinder radius="${joint_2_radius}" length="${joint_2_thickness}"/> 
-                </geometry>
-            </collision>
-        </link>
-        <gazebo reference="joint_2_${leg_posi}">
-            <material>Gazebo/Green</material>
-            <!-- <kp value="${kp}" /> -->
-            <!-- <kd value="10" /> -->
-        </gazebo>
-
-        <!-- ジョイント２とリンク２の設定 -->
-        <joint name="joint_2_${leg_posi}_to_link_2_${leg_posi}" type="fixed">
-            <axis xyz="0 0 1"/>
-            <parent link="joint_2_${leg_posi}"/>
-            <child  link="link_2_${leg_posi}"/>
-            <dynamics damping="${joint_2_to_link_2_damping}"/>
-            <origin rpy="-1.57070 0 0" xyz="0 0 0"/>
-        </joint>
-        
         <!-- リンク2の描画 -->
         <link name = "link_2_${leg_posi}">
             <inertial>
@@ -129,53 +92,14 @@
             <material>Gazebo/White</material>
         </gazebo>
 
-        <!-- リンク2とジョイント3の設定 -->
-        <joint name="link_2_${leg_posi}_to_joint_3_${leg_posi}" type="revolute">
-            <axis xyz="0 0 1"/>
+        <!-- ジョイント3の設定 -->
+        <joint name="joint_3_${leg_posi}" type="revolute">
+            <axis xyz="0 -1 0"/>
             <parent link="link_2_${leg_posi}"/>
-            <child  link="joint_3_${leg_posi}"/>
-            <origin rpy="1.57070 0 0" xyz="${link_2_x} 0 0"/>
+            <child  link="link_3_${leg_posi}"/>
+            <origin rpy="0 0 0" xyz="${link_2_x} 0 0"/>
             <dynamics damping="${link_2_to_joint_3_damping}"/>
             <limit lower="-2.0" upper="1.5" effort="${effort_limit}" velocity="100"/>
-        </joint>
-
-   
-
-        <!-- ジョイント3の描画 -->
-        <link name = "joint_3_${leg_posi}">
-            <inertial>
-                <mass value="${joint_3_mass}"/>
-                <origin xyz="0 0 0.0" rpy="0 0 0"/> 
-                <inertia ixx="${I_joint_3_xx}" ixy="0.0" ixz="0.0" iyy="${I_joint_3_yy}" iyz="0.0" izz="${I_joint_3_zz}"/>
-            </inertial>
-            <visual>
-                <geometry>
-                    <cylinder radius="${joint_3_radius}" length="${joint_3_thickness}"/> 
-                </geometry>
-                <origin xyz="0 0 0.0" rpy="0 0 0"/> 
-                <material name = "yellow"/>
-            </visual>
-            <collision>
-                <origin xyz="0 0 0.0" rpy="0 0 0"/>
-                <geometry>
-                    <cylinder radius="${joint_3_radius}" length="${joint_3_thickness}"/> 
-                </geometry>
-            </collision>
-        </link>
-        <gazebo reference="joint_3_${leg_posi}">
-            <material>Gazebo/Yellow</material>
-            <!-- <kp value="${kp}" /> -->
-            <!-- <kd value="10" /> -->
-        </gazebo>
-
-
-        <!-- ジョイント3とリンク3の設定 -->
-        <joint name="joint_3_${leg_posi}_to_link_3_${leg_posi}" type="fixed">
-            <axis xyz="0 0 1"/>
-            <parent link="joint_3_${leg_posi}"/>
-            <child  link="link_3_${leg_posi}"/>
-            <dynamics damping="${joint_3_to_link_3_damping}"/>
-            <origin rpy="-1.57070 0 0" xyz="0 0 0"/>
         </joint>
         
         <link name = "link_3_${leg_posi}">
@@ -204,53 +128,14 @@
             <!-- <kd value="10" /> -->
         </gazebo>
 
-        <!-- リンク3とジョイント4の設定 -->
-        <joint name="link_3_${leg_posi}_to_joint_4_${leg_posi}" type="revolute">
-            <axis xyz="0 0 1"/>
+        <!-- ジョイント4の設定 -->
+        <joint name="joint_4_${leg_posi}" type="revolute">
+            <axis xyz="0 -1 0"/>
             <parent link="link_3_${leg_posi}"/>
-            <child  link="joint_4_${leg_posi}"/>
-            <origin rpy="1.57070 0 0" xyz="${link_3_x} 0 0"/>
+            <child  link="link_4_${leg_posi}"/>
+            <origin rpy="0 0 0" xyz="${link_3_x} 0 0"/>
             <dynamics damping="${link_3_to_joint_4_damping}"/>
             <limit lower="-2.0" upper="1.5" effort="${effort_limit}" velocity="100"/>
-        </joint>
-
-        
-
-        <!-- ジョイント4の描画 -->
-        <link name = "joint_4_${leg_posi}">
-            <inertial>
-                <mass value="${joint_4_mass}"/>
-                <origin xyz="0 0 0.0" rpy="0 0 0"/> 
-                <inertia ixx="${I_joint_4_xx}" ixy="0.0" ixz="0.0" iyy="${I_joint_4_yy}" iyz="0.0" izz="${I_joint_4_zz}"/>
-            </inertial>
-            <visual>
-                <geometry>
-                    <cylinder radius="${joint_4_radius}" length="${joint_4_thickness}"/> 
-                </geometry>
-                <origin xyz="0 0 0.0" rpy="0 0 0"/> 
-                <material name = "yellow"/>
-            </visual>
-            <collision>
-                <origin xyz="0 0 0.0" rpy="0 0 0"/> 
-                <geometry>
-                    <cylinder radius="${joint_4_radius}" length="${joint_4_thickness}"/> 
-                </geometry>
-            </collision>
-        </link>
-        <gazebo reference="joint_4_${leg_posi}">
-            <material>Gazebo/Yellow</material>
-            <!-- <kp value="${kp}" /> -->
-            <!-- <kd value="10" /> -->
-        </gazebo>
-
-
-        <!-- ジョイント4とリンク4の描画 -->
-        <joint name="joint_4_${leg_posi}_to_link_4_${leg_posi}" type="fixed">
-            <axis xyz="0 0 1"/>
-            <parent link="joint_4_${leg_posi}"/>
-            <child  link="link_4_${leg_posi}"/>
-            <origin rpy="-1.57070 0 0" xyz="0 0 0"/>
-            <dynamics damping="${joint_4_to_link_4_damping}"/>
         </joint>
         
         <link name = "link_4_${leg_posi}">
@@ -313,9 +198,21 @@
         </link>
         <gazebo reference="wheel_${leg_posi}">
             <material>Gazebo/Blue</material>
-            <mu1>${mu_1}</mu1>
+            <mu>${mu}</mu>
             <mu2>${mu_2}</mu2>
-            <!-- <fdir>0 0 1</fdir> -->
+            <fdir>0 0 1</fdir>
+            <!-- <xacro:if value="${leg_posi=='lf'}">
+                <fdir>1 0 0</fdir>
+            </xacro:if>
+            <xacro:if value="${leg_posi=='lr'}">
+                <fdir>1 0 0</fdir>
+            </xacro:if>
+            <xacro:if value="${leg_posi=='rr'}">
+                <fdir>-1 0 0</fdir>
+            </xacro:if>
+            <xacro:if value="${leg_posi=='rf'}">
+                <fdir>-1 0 0</fdir>
+            </xacro:if> -->
             <!-- <kp value="${kp}" /> -->
             <!-- <kd value="10" /> -->
         </gazebo>
@@ -326,7 +223,7 @@
             <actuator name="$joint_1_${leg_posi}_motor">
               <mechanicalReduction>1</mechanicalReduction>
             </actuator>
-            <joint name="body_to_joint_1_${leg_posi}">
+            <joint name="joint_1_${leg_posi}">
                 <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
         </transmission>
@@ -336,7 +233,7 @@
             <actuator name="$joint_2_${leg_posi}_motor">
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
-            <joint name="joint_1_${leg_posi}_to_joint_2_${leg_posi}">
+            <joint name="joint_2_${leg_posi}">
                 <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
         </transmission>
@@ -347,7 +244,7 @@
             <actuator name="$joint_3_${leg_posi}_motor">
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
-            <joint name="link_2_${leg_posi}_to_joint_3_${leg_posi}">
+            <joint name="joint_3_${leg_posi}">
                 <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
          </transmission>
@@ -358,7 +255,7 @@
             <actuator name="$joint_4_${leg_posi}_motor">
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
-            <joint name="link_3_${leg_posi}_to_joint_4_${leg_posi}">
+            <joint name="joint_4_${leg_posi}">
                 <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
          </transmission>
@@ -370,7 +267,7 @@
                 <mechanicalReduction>1</mechanicalReduction>
             </actuator>
             <joint name="link_4_${leg_posi}_to_wheel_${leg_posi}">
-                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+                <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             </joint>
         </transmission>
     </xacro:macro>  

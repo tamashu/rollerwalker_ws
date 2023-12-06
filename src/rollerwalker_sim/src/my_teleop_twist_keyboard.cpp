@@ -69,13 +69,15 @@ int getch(void)
 int main(int argc, char** argv)
 {
   bool pre_start_flag =false;
+  bool pre_rollerwalk_flag =true;
   // Init ROS node
   ros::init(argc, argv, "teleop_twist_keyboard");
   ros::NodeHandle nh;
 
   // Init cmd_vel publisher
   ros::Publisher is_start_pub = nh.advertise<std_msgs::Bool>("is_start_flag", 1);
-  std_msgs::Bool start_flag_msg;
+  ros::Publisher is_rollerwalk_pub = nh.advertise<std_msgs::Bool>("is_rollerwalk_flag", 1);
+  std_msgs::Bool start_flag_msg , rollerwalk_flag_msg;
 
 
 
@@ -88,7 +90,7 @@ int main(int argc, char** argv)
     // If the key corresponds to a key in moveBindings
     ROS_INFO("input_key: %c", key);
 
-    if(key =='s'){
+    if(key =='s'){  //起動スタート
       if(pre_start_flag==false){
         start_flag_msg.data = true;
         is_start_pub.publish(start_flag_msg);
@@ -98,6 +100,18 @@ int main(int argc, char** argv)
         start_flag_msg.data = false;
         is_start_pub.publish(start_flag_msg);
         pre_start_flag = false;
+      }
+    }
+    else if(key =='c'){ //モードチェンジ
+      if(pre_rollerwalk_flag==false){
+        rollerwalk_flag_msg.data = true;
+        is_rollerwalk_pub.publish(rollerwalk_flag_msg);
+        pre_rollerwalk_flag = true;
+      }
+      else{
+        rollerwalk_flag_msg.data = false;
+        is_rollerwalk_pub.publish(rollerwalk_flag_msg);
+        pre_rollerwalk_flag = false;
       }
     }
 

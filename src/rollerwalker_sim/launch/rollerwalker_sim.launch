@@ -15,7 +15,7 @@
 
   <!-- ロボットモデルをrobot_descriptionにload -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model) --inorder"/>
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker -z 0.2" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker -z 0.6" />
 
   
   <!-- コントローラの起動 -->
@@ -35,6 +35,8 @@
   <node name="my_teleop_key_board" pkg="rollerwalker_sim" type="my_teleop_twist_keyboard"/>
   <!-- ドライバーの起動（速度司令） -->
   <node name="rollerwalker_driver" pkg="rollerwalker_sim" type="rollerwalker_driver" output="screen"/>
+  <!-- joint_recieverの起動(gazeboからの状態の取得) -->
+  <node name="joint_state_reciever" pkg="rollerwalker_sim" type="joint_state_reciever" output="screen"/>
 
   <!-- RVIZ -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />

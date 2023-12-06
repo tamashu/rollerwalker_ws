@@ -32,6 +32,9 @@ BaseRollerwalker::BaseRollerwalker(double d_0, double theta_0, double omega, dou
 
 	this->center_z = center_z;
 }
+double BaseRollerwalker::getOmega(){	//omegaのゲッタ
+	return omega;
+}
 //各脚のゲッター
 //左前脚
 double BaseRollerwalker::getTheta1LF(){
@@ -102,22 +105,22 @@ void BaseRollerwalker::calAndSetTheta(double t){
 	}
 
 	//左前脚
-	theta_1_lf = theta_front(t,theta_0,omega)+PI/2;
+	theta_1_lf = -theta_front(t,theta_0,omega)+PI/2;
 	theta_2_lf = calTheta2(d_lf);
 	theta_3_lf = calTheta3(d_lf,theta_2_lf);
 	theta_4_lf = calTheta4(theta_2_lf,theta_3_lf,is_rollerWalk);
 	//左後ろ脚
-	theta_1_lr = theta_front(t,theta_0,omega)+PI/2;
+	theta_1_lr = -theta_front(t,theta_0,omega)+PI/2;
 	theta_2_lr = calTheta2(d_lr);
 	theta_3_lr = calTheta3(d_lr,theta_2_lr);
 	theta_4_lr = calTheta4(theta_2_lr,theta_3_lr,is_rollerWalk);
 	//右後ろ脚
-	theta_1_rr = -theta_front(t,theta_0,omega) - PI/2;
+	theta_1_rr = theta_front(t,theta_0,omega) - PI/2;
 	theta_2_rr = calTheta2(d_rr);
 	theta_3_rr = calTheta3(d_rr,theta_2_rr);
 	theta_4_rr = calTheta4(theta_2_rr,theta_3_rr,is_rollerWalk);
 	//右前脚
-	theta_1_rf = -theta_front(t,theta_0,omega)- PI/2;
+	theta_1_rf = theta_front(t,theta_0,omega)- PI/2;
 	theta_2_rf = calTheta2(d_rf);
 	theta_3_rf = calTheta3(d_rf,theta_2_rf);
 	theta_4_rf = calTheta4(theta_2_rf,theta_3_rf,is_rollerWalk);
