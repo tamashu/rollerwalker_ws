@@ -9,22 +9,22 @@
             <axis xyz="0 0 1"/>
             <!-- lf -->
             <xacro:if value="${leg_posi=='lf'}">
-                <origin xyz="${body_length/2 - joint_1_radius/2} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 0"/>
+                <origin xyz="${body_length/2 - joint_1_radius/2} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 1.5708"/>
                 <limit lower="0.2" upper="3" effort="${effort_limit}" velocity="100"/>    
             </xacro:if>
             <!-- lr -->
             <xacro:if value="${leg_posi=='lr'}">
-                <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 0"/>
+                <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 1.5708"/>
                 <limit lower="0.2" upper="3" effort="${effort_limit}" velocity="100"/>    
             </xacro:if>
             <!-- rr -->
             <xacro:if value="${leg_posi=='rr'}">
-                <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 0"/>
+                <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 -1.5708"/>
                 <limit lower="-3" upper="-0.2" effort="${effort_limit}" velocity="100"/>
             </xacro:if>
             <!-- rf -->
             <xacro:if value="${leg_posi=='rf'}">
-                <origin xyz="${body_length/2 - joint_1_radius/2} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 0"/>
+                <origin xyz="${body_length/2 - joint_1_radius/2} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 -1.5708"/>
                 <limit lower="-3" upper="-0.2" effort="${effort_limit}" velocity="100"/>
             </xacro:if>
             
@@ -97,7 +97,7 @@
             <axis xyz="0 -1 0"/>
             <parent link="link_2_${leg_posi}"/>
             <child  link="link_3_${leg_posi}"/>
-            <origin rpy="0 0 0" xyz="${link_2_x} 0 0"/>
+            <origin rpy="0 1.5708 0" xyz="${link_2_x} 0 0"/>
             <dynamics damping="${link_2_to_joint_3_damping}"/>
             <limit lower="-2.0" upper="1.5" effort="${effort_limit}" velocity="100"/>
         </joint>
@@ -200,7 +200,7 @@
             <material>Gazebo/Blue</material>
             <mu>${mu}</mu>
             <mu2>${mu_2}</mu2>
-            <fdir>0 0 1</fdir>
+            <!-- <fdir>0 0 1</fdir> -->
             <!-- <xacro:if value="${leg_posi=='lf'}">
                 <fdir>1 0 0</fdir>
             </xacro:if>

@@ -6,6 +6,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
 
+#define PI 3.1415926535897932384626433832795
 
 RollerwalkerDriver::RollerwalkerDriver(double d_0, double theta_0, double omega, double phi,  double phi_fr, double center_z, bool is_rollerwalk)
         : BaseRollerwalker(d_0, theta_0, omega, phi, phi_fr, center_z , is_rollerwalk),nh_("~")
@@ -180,7 +181,7 @@ void RollerwalkerDriver::jointsPublish_(double t){
     rollerwalker_joints_pub_rf_[3].publish(joint4_msg);
 }
 
-#define PI 3.1415926535897932384626433832795
+
 
 int main(int argc, char** argv)
 {

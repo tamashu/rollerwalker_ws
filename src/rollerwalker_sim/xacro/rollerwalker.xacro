@@ -2,12 +2,14 @@
     <xacro:include filename="$(find rollerwalker_sim)/xacro/include/leg_macro.xacro" />
 
     <!-- 本体の描画 -->
-    <link name="base_link"/>
+    <link name="base_link">
+        <origin xyz="0 0 ${body_z}" rpy="0 0 0"/>
+    </link>
 
     <joint name="base_to_body" type="fixed">
         <parent link="base_link"/>
         <child  link="body"/>
-        <origin xyz="0 0 ${body_z}" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
     <!-- ボディ --> 
