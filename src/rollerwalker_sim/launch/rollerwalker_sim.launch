@@ -15,7 +15,7 @@
 
   <!-- ロボットモデルをrobot_descriptionにload -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model) --inorder"/>
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker -z 0.4" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker -z 0.6" />
 
   
   <!-- コントローラの起動 -->

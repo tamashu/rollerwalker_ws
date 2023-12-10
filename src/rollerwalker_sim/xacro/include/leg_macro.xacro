@@ -10,24 +10,20 @@
             <!-- lf -->
             <xacro:if value="${leg_posi=='lf'}">
                 <origin xyz="${body_length/2 - joint_1_radius/2} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 1.5708"/>
-                <limit lower="0.2" upper="3" effort="${effort_limit}" velocity="100"/>    
             </xacro:if>
             <!-- lr -->
             <xacro:if value="${leg_posi=='lr'}">
                 <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${body_width/2 - joint_1_radius/2} 0.0" rpy="0 0 1.5708"/>
-                <limit lower="0.2" upper="3" effort="${effort_limit}" velocity="100"/>    
             </xacro:if>
             <!-- rr -->
             <xacro:if value="${leg_posi=='rr'}">
                 <origin xyz="${-(body_length/2 - joint_1_radius/2)} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 -1.5708"/>
-                <limit lower="-3" upper="-0.2" effort="${effort_limit}" velocity="100"/>
             </xacro:if>
             <!-- rf -->
             <xacro:if value="${leg_posi=='rf'}">
                 <origin xyz="${body_length/2 - joint_1_radius/2} ${-(body_width/2 - joint_1_radius/2)} 0.0" rpy="0 0 -1.5708"/>
-                <limit lower="-3" upper="-0.2" effort="${effort_limit}" velocity="100"/>
             </xacro:if>
-            
+            <limit lower="-0.4" upper="0.4" effort="${effort_limit}" velocity="100"/>    
             <dynamics damping="${joint_1_damping}"/>
         </joint>
 
@@ -171,7 +167,7 @@
             <parent link="link_4_${leg_posi}"/>
             <child  link="wheel_${leg_posi}"/>
             <origin rpy="0 1.57070 0" xyz="${link_4_x + wheel_thickness/2} 0 0"/>
-            <dynamics damping="${link_4_to_wheel_damping}"/>
+            <dynamics damping="${link_4_to_wheel_damping}" />
             <!-- <limit lower="-1.79769e+308" upper="1.79769e+308" effort="0" velocity="0"/> -->
         </joint>
 
@@ -198,23 +194,11 @@
         </link>
         <gazebo reference="wheel_${leg_posi}">
             <material>Gazebo/Blue</material>
-            <mu>${mu}</mu>
+            <mu1>${mu}</mu1>
             <mu2>${mu_2}</mu2>
-            <!-- <fdir>0 0 1</fdir> -->
-            <!-- <xacro:if value="${leg_posi=='lf'}">
-                <fdir>1 0 0</fdir>
-            </xacro:if>
-            <xacro:if value="${leg_posi=='lr'}">
-                <fdir>1 0 0</fdir>
-            </xacro:if>
-            <xacro:if value="${leg_posi=='rr'}">
-                <fdir>-1 0 0</fdir>
-            </xacro:if>
-            <xacro:if value="${leg_posi=='rf'}">
-                <fdir>-1 0 0</fdir>
-            </xacro:if> -->
-            <!-- <kp value="${kp}" /> -->
-            <!-- <kd value="10" /> -->
+            <fdir1>1 0 0</fdir1>
+            <!-- <kp value="0.0001" />
+            <kd value="0.2" /> -->
         </gazebo>
 
         <!-- トランスミッション -->
