@@ -19,10 +19,6 @@ public:
     void isStartCallback_(const std_msgs::Bool& msg);
     void isRollerwalkCallback_(const std_msgs::Bool& msg);
     //joint_positon関連
-    void jointPositionLFCallback_(const std_msgs::Float32MultiArray& msg);
-    void jointPositionLRCallback_(const std_msgs::Float32MultiArray& msg);
-    void jointPositionRRCallback_(const std_msgs::Float32MultiArray& msg);
-    void jointPositionRFCallback_(const std_msgs::Float32MultiArray& msg);
 
     bool getIsStartFlag_();
     bool getIsRollerwalk();
@@ -48,10 +44,7 @@ private:
     bool is_changing_mode_;  //モード変化中ならtrue
     bool is_complete_mode_change_; //モード変更が完了しているか
     ros::Subscriber is_start_flag_sub_,is_rollerwalk_flag_sub_; //flagのサブスクライバ
-    ros::Subscriber joint_positions_lf_sub_,joint_positions_lr_sub_,joint_positions_rr_sub_,joint_positions_rf_sub_; //各関節の状態のサブスクライバ
+    
 
-    std::array<float,4>joint_position_lf_;
-    std::array<float,4>joint_position_lr_;
-    std::array<float,4>joint_position_rr_;
-    std::array<float,4>joint_position_rf_;
+
 };  

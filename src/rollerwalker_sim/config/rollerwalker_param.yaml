@@ -1,0 +1,9 @@
+rollerwalker_param:
+  # タイヤの半径
+  wheel_radius: 0.035
+  # ボディーの横幅
+  body_width: 0.29
+  #リンクの長さ
+  l2: 0.2
+  l3: 0.243
+  l4: 0.031

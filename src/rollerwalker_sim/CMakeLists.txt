@@ -210,6 +210,7 @@ include
 add_executable(rollerwalker_driver src/RollerwalkerDriver.cpp)
 add_executable(my_teleop_twist_keyboard src/my_teleop_twist_keyboard.cpp)
 add_executable(joint_state_reciever src/joint_state_reciever.cpp)
+add_executable(wheel_odom_pub src/WheelOdomPub.cpp)
 add_library(BaseRollerwalker src/BaseRollerwalker.cpp)
 
 target_link_libraries(rollerwalker_driver
@@ -219,5 +220,8 @@ target_link_libraries(my_teleop_twist_keyboard
   ${catkin_LIBRARIES} 
 )
 target_link_libraries(joint_state_reciever
+  ${catkin_LIBRARIES} 
+)
+target_link_libraries(wheel_odom_pub
   ${catkin_LIBRARIES} 
 )

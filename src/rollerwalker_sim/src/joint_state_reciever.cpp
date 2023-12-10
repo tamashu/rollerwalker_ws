@@ -1,28 +1,4 @@
-#include <ros/ros.h>
-#include <sensor_msgs/JointState.h>
-#include <std_msgs/Float32MultiArray.h>
-#include <iostream>
-class JointStateReciever
-{
-public:
-    JointStateReciever();
-    void jointSubCalback_(const sensor_msgs::JointState::ConstPtr& msg);
-    void timerJointPositionPublishCalback(const ros::TimerEvent& e);
-private:
-    ros::NodeHandle nh_;
-    ros::Subscriber joint_states_sub_;
-    ros::Publisher joint_positions_lf_pub_,joint_positions_lr_pub_,joint_positions_rr_pub_,joint_positions_rf_pub_;
-    ros::Timer timer_;
-
-    std::array<float, 4> joint_lf_positions_{}; // rad
-    std::array<float, 4> joint_lr_positions_{}; // rad
-    std::array<float, 4> joint_rr_positions_{}; // rad
-    std::array<float, 4> joint_rf_positions_{}; // rad
-    std::array<std::array<float, 4>,4> joint_positions_{joint_lf_positions_,joint_lr_positions_,joint_rr_positions_,joint_rf_positions_};
-
-    std::array<ros::Publisher, 4> joint_positions_pubs_;
-
-};
+#include "rollerwalker_sim/joint_state_reciver.hpp"
 
 JointStateReciever::JointStateReciever(){
     joint_states_sub_ = nh_.subscribe("/rollerwalker/joint_states", 0,&JointStateReciever::jointSubCalback_, this);
@@ -30,12 +6,14 @@ JointStateReciever::JointStateReciever(){
     joint_positions_pubs_[1] = nh_.advertise<std_msgs::Float32MultiArray>("joint_positions_lr", 5);
     joint_positions_pubs_[2] = nh_.advertise<std_msgs::Float32MultiArray>("joint_positions_rr", 5);
     joint_positions_pubs_[3] = nh_.advertise<std_msgs::Float32MultiArray>("joint_positions_rf", 5);
+    wheel_velocity_pub_      = nh_.advertise<std_msgs::Float32MultiArray>("wheel_velocity", 5);
     timer_ =nh_.createTimer(ros::Duration(0.1), &JointStateReciever::timerJointPositionPublishCalback, this);
 }
 
 void JointStateReciever::jointSubCalback_(const sensor_msgs::JointState::ConstPtr& msg){
     std::vector<std::string> joint_names = msg->name;
     std::vector<double> joint_position = msg->position;
+    std::vector<double> joint_velocity = msg->velocity;
     
     //jointのpositionの取得
     for(int i=0;i<joint_names.size();i++){
@@ -55,18 +33,38 @@ void JointStateReciever::jointSubCalback_(const sensor_msgs::JointState::ConstPt
                 joint_positions_[3][joint_num-1] = joint_position[i];
             }
         }
+        else{//タイヤのポジション
+            std::string joint_name =joint_names[i];
+            std::string position =  joint_name.substr(joint_name.size()-2);   //jointの位置の取得
+            if(position =="lf"){
+                wheel_velocity_[0] = joint_velocity[i];
+            }
+            else if(position =="lr"){
+                wheel_velocity_[1] = joint_velocity[i];
+            }
+            else if(position =="rr"){
+                wheel_velocity_[2] = joint_velocity[i];
+            }
+            else if(position =="rf"){
+                wheel_velocity_[3] = joint_velocity[i];
+            }
+        }
     }
-
 }
 
 void JointStateReciever::timerJointPositionPublishCalback(const ros::TimerEvent& e){
     std_msgs::Float32MultiArray position_msg;
+    std_msgs::Float32MultiArray velocity_msg;
+    //jointのポジションのpub
     for(int i=0;i<joint_positions_pubs_.size();i++){
         std::vector<float> pub_data(joint_positions_[i].begin(),joint_positions_[i].end());
         position_msg.data =pub_data;
         joint_positions_pubs_[i].publish(position_msg);
     }
-    // position_msg.data = joint_positions_[0];
+    //wheel_velocityのpub
+    std::vector<float> pub_data(wheel_velocity_.begin(),wheel_velocity_.end());
+    velocity_msg.data =pub_data;
+    wheel_velocity_pub_.publish(velocity_msg);
 }
 
 int main(int argc, char** argv)
