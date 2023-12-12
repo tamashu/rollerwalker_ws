@@ -50,5 +50,12 @@
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
             <legacyModeNS>true</legacyModeNS>
         </plugin>
+
+        <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+            <frameName>world</frameName>
+            <bodyName>base_link</bodyName>
+            <topicName>/true_position</topicName>
+            <updateRate>${gazebo_position_publish_rate}</updateRate>
+        </plugin>
     </gazebo>
 </robot>

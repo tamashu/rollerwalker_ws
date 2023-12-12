@@ -1,13 +1,15 @@
 #include "rollerwalker_sim/joint_state_reciver.hpp"
 
 JointStateReciever::JointStateReciever(){
+    nh_.getParam("/publish_frequency", publish_frequency_);
+
     joint_states_sub_ = nh_.subscribe("/rollerwalker/joint_states", 0,&JointStateReciever::jointSubCalback_, this);
     joint_positions_pubs_[0] = nh_.advertise<std_msgs::Float32MultiArray>("joint_positions_lf", 5);
     joint_positions_pubs_[1] = nh_.advertise<std_msgs::Float32MultiArray>("joint_positions_lr", 5);
     joint_positions_pubs_[2] = nh_.advertise<std_msgs::Float32MultiArray>("joint_positions_rr", 5);
     joint_positions_pubs_[3] = nh_.advertise<std_msgs::Float32MultiArray>("joint_positions_rf", 5);
     wheel_velocity_pub_      = nh_.advertise<std_msgs::Float32MultiArray>("wheel_velocity", 5);
-    timer_ =nh_.createTimer(ros::Duration(0.1), &JointStateReciever::timerJointPositionPublishCalback, this);
+    timer_ =nh_.createTimer(ros::Duration(1/publish_frequency_), &JointStateReciever::timerJointPositionPublishCalback, this);
 }
 
 void JointStateReciever::jointSubCalback_(const sensor_msgs::JointState::ConstPtr& msg){

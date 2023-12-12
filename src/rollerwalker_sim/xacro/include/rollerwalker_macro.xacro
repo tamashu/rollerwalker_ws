@@ -125,7 +125,7 @@
     <xacro:property name="joint_3_to_link_3_damping"  value="0.1" />   <!-- ジョイント3からリンク3のダンピング係数 -->
     <xacro:property name="link_3_to_joint_4_damping"  value="0.1" />   <!-- リンク3からジョイント4のダンピング係数 -->
     <xacro:property name="joint_4_to_link_4_damping"  value="0.1" />   <!-- ジョイント4からリンク4のダンピング係数 -->
-    <xacro:property name="link_4_to_wheel_damping"    value="0.01" />   <!-- リンク4からホイールのダンピング係数 -->
+    <xacro:property name="link_4_to_wheel_damping"    value="0.005" />   <!-- リンク4からホイールのダンピング係数 -->
 
         <!-- 摩擦力 -->
     <xacro:property name="mu" value="0.417" />    
@@ -138,5 +138,9 @@
 
     <!-- effort_limit -->
     <xacro:property name="effort_limit" value="100000" />
+
+    <!-- gazebo上の位置のパブリッシュレート -->
+    <xacro:property name="gazebo_position_publish_rate" value="50" />
+    
 
 </robot>

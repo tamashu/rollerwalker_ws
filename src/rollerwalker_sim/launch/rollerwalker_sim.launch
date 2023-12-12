@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
   <rosparam command="load" file="$(find rollerwalker_sim)/config/rollerwalker_param.yaml"/>
-
+  <!-- シミュレーション時間の使用 -->
+  <param name="/use_sim_time" value="true" />
   <!-- gazebo関連 -->
   <include file="$(find rollerwalker_sim)/launch/rollerwalker_gazebo.launch" />
 

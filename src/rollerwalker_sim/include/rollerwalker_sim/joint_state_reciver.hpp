@@ -16,6 +16,8 @@ private:
     ros::Publisher joint_positions_lf_pub_,joint_positions_lr_pub_,joint_positions_rr_pub_,joint_positions_rf_pub_;
     ros::Timer timer_;
 
+    int publish_frequency_;
+
     std::array<float, 4> joint_lf_positions_{}; // rad
     std::array<float, 4> joint_lr_positions_{}; // rad
     std::array<float, 4> joint_rr_positions_{}; // rad

@@ -7,3 +7,6 @@ rollerwalker_param:
   l2: 0.2
   l3: 0.243
   l4: 0.031
+
+# 計算周期
+publish_frequency: 50
