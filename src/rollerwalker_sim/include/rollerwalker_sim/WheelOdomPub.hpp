@@ -65,6 +65,6 @@ private:
 
     ros::Subscriber joint_positions_lf_sub_,joint_positions_lr_sub_,joint_positions_rr_sub_,joint_positions_rf_sub_,wheel_velocity_sub_; //各関節の状態のサブスクライバ
     ros::Subscriber true_position_sub_;
-    ros::Publisher velocity_pub_,true_velocity_pub_;
+    ros::Publisher velocity_pub_,true_velocity_pub_, center_z_pub_;
     
 };

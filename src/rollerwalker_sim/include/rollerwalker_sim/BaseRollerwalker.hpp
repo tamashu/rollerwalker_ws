@@ -49,25 +49,28 @@ public:
 	double getOmega();	//omegaのゲッタ
 	//各脚の関節の値のゲッター
 	//左前脚
-	double getTheta1LF();	//関節1
-	double getTheta2LF();	//関節2
-	double getTheta3LF();	//関節3
-	double getTheta4LF();	//関節4
+	double getTheta1LF_();	//関節1
+	double getTheta2LF_();	//関節2
+	double getTheta3LF_();	//関節3
+	double getTheta4LF_();	//関節4
 	//左後ろ脚
-	double getTheta1LR();	//関節1
-	double getTheta2LR();	//関節2
-	double getTheta3LR();	//関節3
-	double getTheta4LR();	//関節4
+	double getTheta1LR_();	//関節1
+	double getTheta2LR_();	//関節2
+	double getTheta3LR_();	//関節3
+	double getTheta4LR_();	//関節4
 	//右後ろ脚
-	double getTheta1RR();	//関節1
-	double getTheta2RR();	//関節2
-	double getTheta3RR();	//関節3
-	double getTheta4RR();	//関節4
+	double getTheta1RR_();	//関節1
+	double getTheta2RR_();	//関節2
+	double getTheta3RR_();	//関節3
+	double getTheta4RR_();	//関節4
 	//右前脚
-	double getTheta1RF();	//関節1
-	double getTheta2RF();	//関節2
-	double getTheta3RF();	//関節3
-	double getTheta4RF();	//関節4
+	double getTheta1RF_();	//関節1
+	double getTheta2RF_();	//関節2
+	double getTheta3RF_();	//関節3
+	double getTheta4RF_();	//関節4
+
+	//重心位置のセッター
+	void setCenterZ(double center_z);
 
 private:
 	//定数
@@ -109,7 +112,7 @@ private:
 	double phi_fr;				//前後の脚の位相差(後ろ足の周期関数に使用)
 	
     //ローラウォーカの姿勢
-    double center_z;                   //ローラウォーカー本体の高さ
+    double center_z_;                   //ローラウォーカー本体の高さ
     double target_z;            //ローラウォーカの第四関節の終端の高さ(モードによってホイールの高さ（厚み)が変わるため）
 
     //その他パラメータ

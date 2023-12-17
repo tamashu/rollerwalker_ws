@@ -30,63 +30,67 @@ BaseRollerwalker::BaseRollerwalker(double d_0, double theta_0, double omega, dou
 		this->target_z =l4 +  WHEEL_THICKNESS;
 	}
 
-	this->center_z = center_z;
+	this->center_z_ = center_z;
 }
 double BaseRollerwalker::getOmega(){	//omegaのゲッタ
 	return omega;
 }
 //各脚のゲッター
 //左前脚
-double BaseRollerwalker::getTheta1LF(){
+double BaseRollerwalker::getTheta1LF_(){
 	return theta_1_lf;
 }
-double BaseRollerwalker::getTheta2LF(){
+double BaseRollerwalker::getTheta2LF_(){
 	return theta_2_lf;
 }
-double BaseRollerwalker::getTheta3LF(){
+double BaseRollerwalker::getTheta3LF_(){
 	return theta_3_lf;
 }
-double BaseRollerwalker::getTheta4LF(){
+double BaseRollerwalker::getTheta4LF_(){
 	return theta_4_lf;
 }
 //左後ろ脚
-double BaseRollerwalker::getTheta1LR(){
+double BaseRollerwalker::getTheta1LR_(){
 	return theta_1_lr;
 }
-double BaseRollerwalker::getTheta2LR(){
+double BaseRollerwalker::getTheta2LR_(){
 	return theta_2_lr;
 }
-double BaseRollerwalker::getTheta3LR(){
+double BaseRollerwalker::getTheta3LR_(){
 	return theta_3_lr;
 }
-double BaseRollerwalker::getTheta4LR(){
+double BaseRollerwalker::getTheta4LR_(){
 	return theta_4_lr;
 }
 //右後ろ脚
-double BaseRollerwalker::getTheta1RR(){
+double BaseRollerwalker::getTheta1RR_(){
 	return theta_1_rr;
 }
-double BaseRollerwalker::getTheta2RR(){
+double BaseRollerwalker::getTheta2RR_(){
 	return theta_2_rr;
 }
-double BaseRollerwalker::getTheta3RR(){
+double BaseRollerwalker::getTheta3RR_(){
 	return theta_3_rr;
 }
-double BaseRollerwalker::getTheta4RR(){
+double BaseRollerwalker::getTheta4RR_(){
 	return theta_4_rr;
 }
 //右前脚
-double BaseRollerwalker::getTheta1RF(){
+double BaseRollerwalker::getTheta1RF_(){
 	return theta_1_rf;
 }
-double BaseRollerwalker::getTheta2RF(){
+double BaseRollerwalker::getTheta2RF_(){
 	return theta_2_rf;
 }
-double BaseRollerwalker::getTheta3RF(){
+double BaseRollerwalker::getTheta3RF_(){
 	return theta_3_rf;
 }
-double BaseRollerwalker::getTheta4RF(){
+double BaseRollerwalker::getTheta4RF_(){
 	return theta_4_rf;
+}
+//重心位置のセッター
+void BaseRollerwalker::setCenterZ(double center_z){
+	center_z_ = center_z;
 }
 
 void BaseRollerwalker::calAndSetTheta(double t){
@@ -104,7 +108,7 @@ void BaseRollerwalker::calAndSetTheta(double t){
 		d_rf = d_rf - l4 - WHEEL_THICKNESS/2;
 	}
 
-	//左前脚
+	// 左前脚
 	theta_1_lf = -theta_front(t,theta_0,omega);
 	theta_2_lf = calTheta2(d_lf);
 	theta_3_lf = calTheta3(d_lf,theta_2_lf) + PI/2;
@@ -124,6 +128,25 @@ void BaseRollerwalker::calAndSetTheta(double t){
 	theta_2_rf = calTheta2(d_rf);
 	theta_3_rf = calTheta3(d_rf,theta_2_rf)+ PI/2;
 	theta_4_rf = calTheta4(theta_2_rf,theta_3_rf,is_rollerWalk);
+	// theta_1_lf = theta_front(t,theta_0,omega);
+	// theta_2_lf = calTheta2(d_lf);
+	// theta_3_lf = calTheta3(d_lf,theta_2_lf) + PI/2;
+	// theta_4_lf = calTheta4(theta_2_lf,theta_3_lf,is_rollerWalk);
+	// //左後ろ脚
+	// theta_1_lr = theta_front(t,theta_0,omega);
+	// theta_2_lr = calTheta2(d_lr);
+	// theta_3_lr = calTheta3(d_lr,theta_2_lr)+ PI/2;
+	// theta_4_lr = calTheta4(theta_2_lr,theta_3_lr,is_rollerWalk);
+	// //右後ろ脚
+	// theta_1_rr = theta_front(t,theta_0,omega) ;
+	// theta_2_rr = calTheta2(d_rr);
+	// theta_3_rr = calTheta3(d_rr,theta_2_rr)+ PI/2;
+	// theta_4_rr = calTheta4(theta_2_rr,theta_3_rr,is_rollerWalk);
+	// //右前脚
+	// theta_1_rf = theta_front(t,theta_0,omega);
+	// theta_2_rf = calTheta2(d_rf);
+	// theta_3_rf = calTheta3(d_rf,theta_2_rf)+ PI/2;
+	// theta_4_rf = calTheta4(theta_2_rf,theta_3_rf,is_rollerWalk);
 
 	//std::cout << "時刻t: " << t << "  d_lf: " << d_lf << std::endl;
 	//std::cout << "時刻t: " << t << " omega: "<<omega<<"  d_f:" << d_0 * (sin(omega * t + 3 * PI / 2) + 1) << std::endl;
@@ -227,16 +250,16 @@ double  BaseRollerwalker::sign(double input){
 }
 
 double BaseRollerwalker::calTheta2(double target_d) {
-	double numerator = pow(target_d, 2) + pow((target_z - center_z), 2) + pow(LINK_2_LENGTH, 2) - pow(LINK_3_LENGTH, 2);
-	double denominator = 2 * LINK_2_LENGTH * sqrt(pow(target_d, 2) + pow(target_z - center_z, 2));
+	double numerator = pow(target_d, 2) + pow((target_z - center_z_), 2) + pow(LINK_2_LENGTH, 2) - pow(LINK_3_LENGTH, 2);
+	double denominator = 2 * LINK_2_LENGTH * sqrt(pow(target_d, 2) + pow(target_z - center_z_, 2));
 
-	double ret = acos(numerator / denominator) + atan((target_z - center_z) /target_d ); //atan要チェック (acos2は[0,pi])
+	double ret = acos(numerator / denominator) + atan((target_z - center_z_) /target_d ); //atan要チェック (acos2は[0,pi])
 
 	return ret;
 }
 
 double BaseRollerwalker::calTheta3(double target_d, double theta2) {
-	double numerator = (target_z - center_z) - LINK_2_LENGTH * sin(theta2);
+	double numerator = (target_z - center_z_) - LINK_2_LENGTH * sin(theta2);
 	double denominator = target_d - LINK_2_LENGTH * cos(theta2);
 	double ret = atan(numerator/denominator) - theta2 ; //atan要チェック
 

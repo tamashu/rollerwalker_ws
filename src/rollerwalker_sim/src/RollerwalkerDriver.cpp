@@ -4,7 +4,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <ros/ros.h>
-#include <std_msgs/Float64.h>
+
 
 #define PI 3.1415926535897932384626433832795
 
@@ -40,6 +40,9 @@ RollerwalkerDriver::RollerwalkerDriver(double d_0, double theta_0, double omega,
     is_complete_mode_change_ = true;
     is_start_flag_sub_ = nh_.subscribe("/is_start_flag", 2, &RollerwalkerDriver::isStartCallback_, this);
     is_rollerwalk_flag_sub_ = nh_.subscribe("/is_rollerwalk_flag", 2, &RollerwalkerDriver::isRollerwalkCallback_, this);
+
+    //center_zの設定（フィードバック)
+    current_center_z_sub_ = nh_.subscribe("/current_center_z", 2, &RollerwalkerDriver::currentCenterZCallback_, this);
 }
 
 //flag_callback
@@ -53,6 +56,11 @@ void RollerwalkerDriver::isRollerwalkCallback_(const std_msgs::Bool& msg)
   if(! is_rollerwalk_){
     // changeToWalk();
   }
+}
+
+void RollerwalkerDriver::currentCenterZCallback_(const std_msgs::Float64& msg){
+    // setCenterZ(msg.data);
+    // ROS_INFO("center_z_in callback:%f",msg.data);
 }
 
 bool RollerwalkerDriver::getIsStartFlag_(){
@@ -73,40 +81,40 @@ void RollerwalkerDriver::jointsPublish_(double t){
     std_msgs::Float64 joint3_msg;
     std_msgs::Float64 joint4_msg;
     //lf
-    joint1_msg.data =getTheta1LF();
-    joint2_msg.data =getTheta2LF();
-    joint3_msg.data =getTheta3LF();
-    joint4_msg.data =getTheta4LF();
+    joint1_msg.data =getTheta1LF_();
+    joint2_msg.data =getTheta2LF_();
+    joint3_msg.data =getTheta3LF_();
+    joint4_msg.data =getTheta4LF_();
 
     rollerwalker_joints_pub_lf_[0].publish(joint1_msg);
     rollerwalker_joints_pub_lf_[1].publish(joint2_msg);
     rollerwalker_joints_pub_lf_[2].publish(joint3_msg);
     rollerwalker_joints_pub_lf_[3].publish(joint4_msg);
     //lr
-    joint1_msg.data =getTheta1LR();
-    joint2_msg.data =getTheta2LR();
-    joint3_msg.data =getTheta3LR();
-    joint4_msg.data =getTheta4LR();
+    joint1_msg.data =getTheta1LR_();
+    joint2_msg.data =getTheta2LR_();
+    joint3_msg.data =getTheta3LR_();
+    joint4_msg.data =getTheta4LR_();
 
     rollerwalker_joints_pub_lr_[0].publish(joint1_msg);
     rollerwalker_joints_pub_lr_[1].publish(joint2_msg);
     rollerwalker_joints_pub_lr_[2].publish(joint3_msg);
     rollerwalker_joints_pub_lr_[3].publish(joint4_msg);
     //rr
-    joint1_msg.data =getTheta1RR();
-    joint2_msg.data =getTheta2RR();
-    joint3_msg.data =getTheta3RR();
-    joint4_msg.data =getTheta4RR();
+    joint1_msg.data =getTheta1RR_();
+    joint2_msg.data =getTheta2RR_();
+    joint3_msg.data =getTheta3RR_();
+    joint4_msg.data =getTheta4RR_();
 
     rollerwalker_joints_pub_rr_[0].publish(joint1_msg);
     rollerwalker_joints_pub_rr_[1].publish(joint2_msg);
     rollerwalker_joints_pub_rr_[2].publish(joint3_msg);
     rollerwalker_joints_pub_rr_[3].publish(joint4_msg);
     //rf
-    joint1_msg.data =getTheta1RF();
-    joint2_msg.data =getTheta2RF();
-    joint3_msg.data =getTheta3RF();
-    joint4_msg.data =getTheta4RF();
+    joint1_msg.data =getTheta1RF_();
+    joint2_msg.data =getTheta2RF_();
+    joint3_msg.data =getTheta3RF_();
+    joint4_msg.data =getTheta4RF_();
 
     rollerwalker_joints_pub_rf_[0].publish(joint1_msg);
     rollerwalker_joints_pub_rf_[1].publish(joint2_msg);
@@ -120,7 +128,7 @@ int main(int argc, char** argv)
 {
     // ローラウォーカーの各ステータス
     double d_0 = 0.08;
-	double theta_0 = 0.15;
+	double theta_0 = 0.3;
 	double omega = PI;
 	double phi = PI / 2;
 	//double phi_fr = 3 * PI / 2;

@@ -24,6 +24,7 @@ WheelOdomPub::WheelOdomPub():nh_("~")
     //publidherの設定
     velocity_pub_ = nh_.advertise<std_msgs::Float64>("/velocity", 5);
     true_velocity_pub_ = nh_.advertise<std_msgs::Float64>("/true_velocity", 5);
+    center_z_pub_ = nh_.advertise<std_msgs::Float64>("/current_center_z", 1);
 
     //timercallbavkの設定
     timer_ =nh_.createTimer(ros::Duration(1/publish_frequency_), &WheelOdomPub::timerWheelVelocityPubCallback_, this);
@@ -74,6 +75,8 @@ void WheelOdomPub::wheelVelocityCallback_(const std_msgs::Float32MultiArray& msg
 void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
     // std_msgs::Float32MultiArray true_velocity_msg;
     std_msgs::Float64 true_velocity_msg;
+    std_msgs::Float64 current_center_z_msg;
+    
 
     true_position_[0] = msg.pose.pose.position.x;
     true_position_[1] = msg.pose.pose.position.y;
@@ -88,21 +91,33 @@ void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
             pre_true_position_[i] = true_position_[i]; //現情報を前情報に代入
         }
 
-        float V = sqrt(pow(V_[0],2)+pow(V_[1],2));
-
+        
+        //各軸に対する速度
         // std::vector<float> pub_data(V_.begin(),V_.end());
         // true_velocity_msg.data =pub_data;
+
+        //速度
+        float V = sqrt(pow(V_[0],2)+pow(V_[1],2));
         true_velocity_msg.data = V;
         true_velocity_pub_.publish(true_velocity_msg);
 
+        // 現在の重心位置のパブリッシュ
+        current_center_z_msg.data = true_position_[2];
+        center_z_pub_.publish(current_center_z_msg);
+        
+        
+
+        
+
         // ROS_INFO("delta_t:%f V_x:%f  V_y:%f  V_z:%f ",delta_t,V_[0],V_[1],V_[2]);
-        ROS_INFO("V:%f",V);
+        // ROS_INFO("V:%f",V);
     }
     else{   //0割りしてしまうときは位置だけ代入する
         for(int i=0;i<3;i++){
             pre_true_position_[i] = true_position_[i]; //現情報を前情報に代入
         }
     }
+    // ROS_INFO("z:%f",true_position_[2]);
     pre_time = ros::Time::now();
     
     

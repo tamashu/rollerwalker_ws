@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include "rollerwalker_sim/BaseRollerwalker.hpp"
+#include <std_msgs/Float64.h>
 
 
 class RollerwalkerDriver : public BaseRollerwalker
@@ -18,8 +19,8 @@ public:
     //flag関連
     void isStartCallback_(const std_msgs::Bool& msg);
     void isRollerwalkCallback_(const std_msgs::Bool& msg);
+    void currentCenterZCallback_(const std_msgs::Float64& msg);
     //joint_positon関連
-
     bool getIsStartFlag_();
     bool getIsRollerwalk();
     bool getChangingFlag();
@@ -44,6 +45,7 @@ private:
     bool is_changing_mode_;  //モード変化中ならtrue
     bool is_complete_mode_change_; //モード変更が完了しているか
     ros::Subscriber is_start_flag_sub_,is_rollerwalk_flag_sub_; //flagのサブスクライバ
+    ros::Subscriber current_center_z_sub_; //重心位置のサブスクライバ
     
 
 
