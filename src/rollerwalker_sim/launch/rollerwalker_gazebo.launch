@@ -2,7 +2,7 @@
 <launch>
     <arg name="model" default="$(find rollerwalker_sim)/xacro/rollerwalker.xacro" />
 
-    <arg name="is_paused" default="false" />
+    <arg name="is_paused" default="false"/>
 
     <!-- gazeboの起動 -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">

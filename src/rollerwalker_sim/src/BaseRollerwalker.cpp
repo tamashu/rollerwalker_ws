@@ -109,12 +109,12 @@ void BaseRollerwalker::calAndSetTheta(double t){
 	}
 
 	// 左前脚
-	theta_1_lf = -theta_front(t,theta_0,omega);
+	theta_1_lf = theta_front(t,theta_0,omega);
 	theta_2_lf = calTheta2(d_lf);
 	theta_3_lf = calTheta3(d_lf,theta_2_lf) + PI/2;
 	theta_4_lf = calTheta4(theta_2_lf,theta_3_lf,is_rollerWalk);
 	//左後ろ脚
-	theta_1_lr = -theta_front(t,theta_0,omega);
+	theta_1_lr = theta_front(t,theta_0,omega);
 	theta_2_lr = calTheta2(d_lr);
 	theta_3_lr = calTheta3(d_lr,theta_2_lr)+ PI/2;
 	theta_4_lr = calTheta4(theta_2_lr,theta_3_lr,is_rollerWalk);
@@ -269,10 +269,10 @@ double BaseRollerwalker::calTheta3(double target_d, double theta2) {
 double BaseRollerwalker::calTheta4(double theta2,double theta3,bool is_rollerwalk) {
 	double ret;
 	if (is_rollerwalk) { //ローラウォーク時
-		ret = - theta2 - theta3+ PI / 2;
+		ret = - theta2 - theta3;
 	}
 	else {	//歩行時
-		ret = - theta2 - theta3 ;
+		ret = - theta2 - theta3+ PI/2 ;
 	}
 	
 	return ret;
