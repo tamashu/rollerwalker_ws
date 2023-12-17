@@ -71,6 +71,11 @@ public:
 
 	//重心位置のセッター
 	void setCenterZ(double center_z);
+	//theta_0のセッター
+	void setTheta_0_lf_(double theta_0_lf);
+	void setTheta_0_lr_(double theta_0_lr);
+	void setTheta_0_rr_(double theta_0_rr);
+	void setTheta_0_rf_(double theta_0_rf);
 
 private:
 	//定数
@@ -78,13 +83,13 @@ private:
 
 	//前脚の脚軌道関数
     double d_front(double t, double d_0, double omega);				//法線方向の脚軌道関数(パラメータ可
-	double theta_front(double t, double theta_0, double omega);		//接線方向の脚軌道関数(パラメータ可変)
+	double theta_front(double t, double theta_0, double omega, double steering_ofset);		//接線方向の脚軌道関数(パラメータ可変)
 	double dotD_front(double t, double d_0, double omega);			//接線方向の脚軌道関数の一階微分(パラメータ可変)
 	double dotTheta_front(double t, double theta_0,double omega );	//接線方向の脚軌道関数の一階微分(パラメータ可変)
 
 	//後ろ足の脚軌道関数
 	double d_rear(double t, double d_0, double omega);				//法線方向の脚軌道関数(パラメータ可変)
-	double theta_rear(double t, double theta_0, double omega);		//接線方向の脚軌道関数(パラメータ可変)
+	double theta_rear(double t, double theta_0, double omega, double steering_ofset);		//接線方向の脚軌道関数(パラメータ可変)
 	double dotD_rear(double t, double d_0, double omega);			//接線方向の脚軌道関数の一階微分(パラメータ可変)
 	double dotTheta_rear(double t, double theta_0, double omega);	//接線方向の脚軌道関数の一階微分(パラメータ可変)
 
@@ -97,7 +102,6 @@ private:
 	double frontAcceleration(double t);//前方向の加速度
 	double sideAcceleration(double t);	//横方向の加速度
 
-	
     //関節角の計算    
     double calTheta2(double target_d);
     double calTheta3(double target_d,double theta2);
@@ -105,11 +109,20 @@ private:
 	double sign(double input);		//符号関数
     
 	//ローラウォーカの4つのパラメータ
-	double d_0;					//法線方向の振幅
-	double theta_0;				//接線方向の振幅
+	double d_0_;				//法線方向の振幅
+	double theta_0_lf_;			//接線方向の振幅
+	double theta_0_lr_;			//接線方向の振幅
+	double theta_0_rr_;			//接線方向の振幅
+	double theta_0_rf_;			//接線方向の振幅
 	double omega;				//脚軌道の周期関数の角速度
 	double phi;					//接線方向と法線方向の正弦波の位相差
 	double phi_fr;				//前後の脚の位相差(後ろ足の周期関数に使用)
+
+	//斜行のためのステアリングオフセット
+	double steering_ofset_lf_;
+	double steering_ofset_lr_;
+	double steering_ofset_rr_;
+	double steering_ofset_rf_;
 	
     //ローラウォーカの姿勢
     double center_z_;                   //ローラウォーカー本体の高さ
@@ -137,24 +150,24 @@ private:
 
 	//各脚の関節の関数
 	//左前脚
-	double theta_1_lf;
-	double theta_2_lf;
-	double theta_3_lf;
-	double theta_4_lf;
+	double theta_1_lf_;
+	double theta_2_lf_;
+	double theta_3_lf_;
+	double theta_4_lf_;
 	//左後ろ脚
-	double theta_1_lr;
-	double theta_2_lr;
-	double theta_3_lr;
-	double theta_4_lr;
+	double theta_1_lr_;
+	double theta_2_lr_;
+	double theta_3_lr_;
+	double theta_4_lr_;
 	//右後ろ脚
-	double theta_1_rr;
-	double theta_2_rr;
-	double theta_3_rr;
-	double theta_4_rr;
+	double theta_1_rr_;
+	double theta_2_rr_;
+	double theta_3_rr_;
+	double theta_4_rr_;
 	//右前脚
-	double theta_1_rf;
-	double theta_2_rf;
-	double theta_3_rf;
-	double theta_4_rf;
+	double theta_1_rf_;
+	double theta_2_rf_;
+	double theta_3_rf_;
+	double theta_4_rf_;
 	
 };

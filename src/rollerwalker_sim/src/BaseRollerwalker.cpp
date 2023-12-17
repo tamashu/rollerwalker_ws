@@ -6,8 +6,18 @@
 #define PI 3.1415926535897932384626433832795
 
 BaseRollerwalker::BaseRollerwalker(double d_0, double theta_0, double omega, double phi,double phi_fr,double center_z, bool is_rollerWalk) {
-	this->d_0 = d_0;
-	this->theta_0 = theta_0;
+	this->d_0_ = d_0;
+
+	theta_0_lf_ = theta_0;
+	theta_0_lr_ = theta_0;
+	theta_0_rr_ = theta_0;
+	theta_0_rf_ = theta_0;
+
+	steering_ofset_lf_ = 0.0;
+	steering_ofset_lr_ = 0.0;
+	steering_ofset_rr_ = 0.0;
+	steering_ofset_rf_ = 0.0;
+
 	this->omega = omega;
 	this->phi = phi;
 	this->phi_fr = phi_fr;
@@ -38,68 +48,82 @@ double BaseRollerwalker::getOmega(){	//omegaのゲッタ
 //各脚のゲッター
 //左前脚
 double BaseRollerwalker::getTheta1LF_(){
-	return theta_1_lf;
+	return theta_1_lf_;
 }
 double BaseRollerwalker::getTheta2LF_(){
-	return theta_2_lf;
+	return theta_2_lf_;
 }
 double BaseRollerwalker::getTheta3LF_(){
-	return theta_3_lf;
+	return theta_3_lf_;
 }
 double BaseRollerwalker::getTheta4LF_(){
-	return theta_4_lf;
+	return theta_4_lf_;
 }
 //左後ろ脚
 double BaseRollerwalker::getTheta1LR_(){
-	return theta_1_lr;
+	return theta_1_lr_;
 }
 double BaseRollerwalker::getTheta2LR_(){
-	return theta_2_lr;
+	return theta_2_lr_;
 }
 double BaseRollerwalker::getTheta3LR_(){
-	return theta_3_lr;
+	return theta_3_lr_;
 }
 double BaseRollerwalker::getTheta4LR_(){
-	return theta_4_lr;
+	return theta_4_lr_;
 }
 //右後ろ脚
 double BaseRollerwalker::getTheta1RR_(){
-	return theta_1_rr;
+	return theta_1_rr_;
 }
 double BaseRollerwalker::getTheta2RR_(){
-	return theta_2_rr;
+	return theta_2_rr_;
 }
 double BaseRollerwalker::getTheta3RR_(){
-	return theta_3_rr;
+	return theta_3_rr_;
 }
 double BaseRollerwalker::getTheta4RR_(){
-	return theta_4_rr;
+	return theta_4_rr_;
 }
 //右前脚
 double BaseRollerwalker::getTheta1RF_(){
-	return theta_1_rf;
+	return theta_1_rf_;
 }
 double BaseRollerwalker::getTheta2RF_(){
-	return theta_2_rf;
+	return theta_2_rf_;
 }
 double BaseRollerwalker::getTheta3RF_(){
-	return theta_3_rf;
+	return theta_3_rf_;
 }
 double BaseRollerwalker::getTheta4RF_(){
-	return theta_4_rf;
+	return theta_4_rf_;
 }
 //重心位置のセッター
 void BaseRollerwalker::setCenterZ(double center_z){
 	center_z_ = center_z;
 }
+// theta_0のセッター
+void BaseRollerwalker::setTheta_0_lf_(double theta_0_lf){
+	theta_0_lf_ = theta_0_lf;
+}
+void BaseRollerwalker::setTheta_0_lr_(double theta_0_lr){
+	theta_0_lr_ = theta_0_lr;
+}
+void BaseRollerwalker::setTheta_0_rr_(double theta_0_lf){
+	theta_0_rr_ = theta_0_lf;
+}
+void BaseRollerwalker::setTheta_0_rf_(double theta_0_lf){
+	theta_0_rf_ = theta_0_lf;
+}
+
 
 void BaseRollerwalker::calAndSetTheta(double t){
 	this->t = t;
 	//脚軌道に必要なパラメータの計算
-	double d_lf  =d_front(t,d_0,omega);   //左前脚の長さ  
-	double d_lr  =d_rear(t,d_0,omega);   //左後ろ脚の長さ  
-	double d_rr  =d_rear(t,d_0,omega);   //右後ろ脚の長さ  
-	double d_rf  =d_front(t,d_0,omega);   //右前脚の長さ
+	double d_lf  =d_front(t,d_0_,omega);   //左前脚の長さ  
+	double d_lr  =d_rear(t,d_0_,omega);   //左後ろ脚の長さ  
+	double d_rr  =d_rear(t,d_0_,omega);   //右後ろ脚の長さ  
+	double d_rf  =d_front(t,d_0_,omega);   //右前脚の長さ
 
 	if(is_rollerWalk){	//タイヤの中心がdとなるための計算
 		d_lf = d_lf - l4 - WHEEL_THICKNESS/2;
@@ -109,47 +133,47 @@ void BaseRollerwalker::calAndSetTheta(double t){
 	}
 
 	// 左前脚
-	theta_1_lf = theta_front(t,theta_0,omega);
-	theta_2_lf = calTheta2(d_lf);
-	theta_3_lf = calTheta3(d_lf,theta_2_lf) + PI/2;
-	theta_4_lf = calTheta4(theta_2_lf,theta_3_lf,is_rollerWalk);
+	theta_1_lf_ = theta_front(t,theta_0_lf_,omega,steering_ofset_lf_);
+	theta_2_lf_ = calTheta2(d_lf);
+	theta_3_lf_ = calTheta3(d_lf,theta_2_lf_) + PI/2;
+	theta_4_lf_ = calTheta4(theta_2_lf_,theta_3_lf_,is_rollerWalk);
 	//左後ろ脚
-	theta_1_lr = theta_front(t,theta_0,omega);
-	theta_2_lr = calTheta2(d_lr);
-	theta_3_lr = calTheta3(d_lr,theta_2_lr)+ PI/2;
-	theta_4_lr = calTheta4(theta_2_lr,theta_3_lr,is_rollerWalk);
+	theta_1_lr_ = theta_front(t,theta_0_lr_,omega,steering_ofset_lf_);
+	theta_2_lr_ = calTheta2(d_lr);
+	theta_3_lr_ = calTheta3(d_lr,theta_2_lr_)+ PI/2;
+	theta_4_lr_ = calTheta4(theta_2_lr_,theta_3_lr_,is_rollerWalk);
 	//右後ろ脚
-	theta_1_rr = theta_front(t,theta_0,omega) ;
-	theta_2_rr = calTheta2(d_rr);
-	theta_3_rr = calTheta3(d_rr,theta_2_rr)+ PI/2;
-	theta_4_rr = calTheta4(theta_2_rr,theta_3_rr,is_rollerWalk);
+	theta_1_rr_ = theta_front(t,theta_0_rr_,omega,steering_ofset_lf_) ;
+	theta_2_rr_ = calTheta2(d_rr);
+	theta_3_rr_ = calTheta3(d_rr,theta_2_rr_)+ PI/2;
+	theta_4_rr_ = calTheta4(theta_2_rr_,theta_3_rr_,is_rollerWalk);
 	//右前脚
-	theta_1_rf = theta_front(t,theta_0,omega);
-	theta_2_rf = calTheta2(d_rf);
-	theta_3_rf = calTheta3(d_rf,theta_2_rf)+ PI/2;
-	theta_4_rf = calTheta4(theta_2_rf,theta_3_rf,is_rollerWalk);
+	theta_1_rf_ = theta_front(t,theta_0_rf_,omega,steering_ofset_lf_);
+	theta_2_rf_ = calTheta2(d_rf);
+	theta_3_rf_ = calTheta3(d_rf,theta_2_rf_)+ PI/2;
+	theta_4_rf_ = calTheta4(theta_2_rf_,theta_3_rf_,is_rollerWalk);
 	// theta_1_lf = theta_front(t,theta_0,omega);
 	// theta_2_lf = calTheta2(d_lf);
 	// theta_3_lf = calTheta3(d_lf,theta_2_lf) + PI/2;
 	// theta_4_lf = calTheta4(theta_2_lf,theta_3_lf,is_rollerWalk);
 	// //左後ろ脚
-	// theta_1_lr = theta_front(t,theta_0,omega);
-	// theta_2_lr = calTheta2(d_lr);
-	// theta_3_lr = calTheta3(d_lr,theta_2_lr)+ PI/2;
-	// theta_4_lr = calTheta4(theta_2_lr,theta_3_lr,is_rollerWalk);
+	// theta_1_lr_ = theta_front(t,theta_0,omega);
+	// theta_2_lr_ = calTheta2(d_lr);
+	// theta_3_lr_ = calTheta3(d_lr,theta_2_lr_)+ PI/2;
+	// theta_4_lr_ = calTheta4(theta_2_lr_,theta_3_lr_,is_rollerWalk);
 	// //右後ろ脚
-	// theta_1_rr = theta_front(t,theta_0,omega) ;
-	// theta_2_rr = calTheta2(d_rr);
-	// theta_3_rr = calTheta3(d_rr,theta_2_rr)+ PI/2;
-	// theta_4_rr = calTheta4(theta_2_rr,theta_3_rr,is_rollerWalk);
+	// theta_1_rr_ = theta_front(t,theta_0,omega) ;
+	// theta_2_rr_ = calTheta2(d_rr);
+	// theta_3_rr_ = calTheta3(d_rr,theta_2_rr_)+ PI/2;
+	// theta_4_rr_ = calTheta4(theta_2_rr_,theta_3_rr_,is_rollerWalk);
 	// //右前脚
-	// theta_1_rf = theta_front(t,theta_0,omega);
-	// theta_2_rf = calTheta2(d_rf);
-	// theta_3_rf = calTheta3(d_rf,theta_2_rf)+ PI/2;
-	// theta_4_rf = calTheta4(theta_2_rf,theta_3_rf,is_rollerWalk);
+	// theta_1_rf_ = theta_front(t,theta_0,omega);
+	// theta_2_rf_ = calTheta2(d_rf);
+	// theta_3_rf_ = calTheta3(d_rf,theta_2_rf_)+ PI/2;
+	// theta_4_rf_ = calTheta4(theta_2_rf_,theta_3_rf_,is_rollerWalk);
 
 	//std::cout << "時刻t: " << t << "  d_lf: " << d_lf << std::endl;
-	//std::cout << "時刻t: " << t << " omega: "<<omega<<"  d_f:" << d_0 * (sin(omega * t + 3 * PI / 2) + 1) << std::endl;
+	//std::cout << "時刻t: " << t << " omega: "<<omega<<"  d_f:" << d_0_ * (sin(omega * t + 3 * PI / 2) + 1) << std::endl;
 	
 }
 
@@ -159,8 +183,8 @@ double BaseRollerwalker::d_front(double t, double d_0, double omega) {
 	//double ret = d_ofset + d_0 * (sin(omega * t) + 1);
 	return ret;
 }
-double BaseRollerwalker::theta_front(double t, double theta_0, double omega) {
-	double ret = -theta_0 * sin(omega * t + 3 * PI / 2 + phi);
+double BaseRollerwalker::theta_front(double t, double theta_0, double omega,double steering_ofset) {
+	double ret = -theta_0 * sin(omega * t + 3 * PI / 2 + phi) + steering_ofset;
 	//double ret = -theta_0 * sin(omega * t+phi);
 	return ret;
 }
@@ -181,8 +205,8 @@ double BaseRollerwalker::d_rear(double t, double d_0, double omega) {
 	//double ret = d_ofset + d_0 * (sin(omega * t  + phi_fr) + 1);
 	return ret;
 }
-double BaseRollerwalker::theta_rear(double t, double theta_0, double omega) {
-	double ret = -theta_0 * sin(omega * t + 3 * PI / 2 + phi+ phi_fr);
+double BaseRollerwalker::theta_rear(double t, double theta_0, double omega, double steering_ofset) {
+	double ret = -theta_0 * sin(omega * t + 3 * PI / 2 + phi+ phi_fr) + steering_ofset;
 	//double ret = -theta_0 * sin(omega * t  + phi+ phi_fr);
 	return ret;
 }
@@ -209,7 +233,10 @@ void BaseRollerwalker::thetaAdaption(double v_d) {
 		theta_target_0 = THETA_MIN_0;
 	}
 
-	theta_0 = theta_0 - K_THETA_0 * (theta_0 - theta_target_0);
+	theta_0_lf_ = theta_0_lf_ - K_THETA_0 * (theta_0_lf_ - theta_target_0);
+	theta_0_lr_ = theta_0_lr_ - K_THETA_0 * (theta_0_lr_ - theta_target_0);
+	theta_0_rr_ = theta_0_rr_ - K_THETA_0 * (theta_0_rr_ - theta_target_0);
+	theta_0_rf_ = theta_0_rf_ - K_THETA_0 * (theta_0_rf_ - theta_target_0);
 }
 
 double  BaseRollerwalker::empricalFormula() {//g(θ)
@@ -221,7 +248,7 @@ double  BaseRollerwalker::empricalFormula() {//g(θ)
 
 	const double a_k[] = { a_0,a_1,a_2,a_3 };
 	for (int k = 0; k <= 3; k++) {
-		ret += a_k[k] * pow(theta_0, k);
+		ret += a_k[k] * pow(theta_0_lf_, k);
 	}
 
 	return ret;
@@ -269,10 +296,10 @@ double BaseRollerwalker::calTheta3(double target_d, double theta2) {
 double BaseRollerwalker::calTheta4(double theta2,double theta3,bool is_rollerwalk) {
 	double ret;
 	if (is_rollerwalk) { //ローラウォーク時
-		ret = - theta2 - theta3;
+		ret = - theta2 - theta3+ PI/2;
 	}
 	else {	//歩行時
-		ret = - theta2 - theta3+ PI/2 ;
+		ret = - theta2 - theta3 ;
 	}
 	
 	return ret;

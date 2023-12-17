@@ -80,6 +80,10 @@ void RollerwalkerDriver::jointsPublish_(double t){
     std_msgs::Float64 joint2_msg;
     std_msgs::Float64 joint3_msg;
     std_msgs::Float64 joint4_msg;
+
+    // setTheta_0_rf_(0);
+    // setTheta_0_rr_(0);
+
     //lf
     joint1_msg.data =getTheta1LF_();
     joint2_msg.data =getTheta2LF_();
@@ -131,7 +135,7 @@ int main(int argc, char** argv)
 	double theta_0 = 0.3;
 	double omega = PI;
 	double phi = PI / 2;
-	//double phi_fr = 3 * PI / 2;
+	// double phi_fr = 3 * PI / 2;
     double phi_fr = 0;
     double  center_z = 0.15;      
     bool is_rollerWalk = true;

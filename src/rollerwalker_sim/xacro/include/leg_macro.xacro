@@ -140,7 +140,7 @@
             <axis xyz="0 -1 0"/>
             <parent link="link_3_${leg_posi}"/>
             <child  link="link_4_${leg_posi}"/>
-            <origin rpy="0 -1.57070 0" xyz="${link_3_x} 0 0"/>
+            <origin rpy="0 0 0" xyz="${link_3_x} 0 0"/>
             <dynamics damping="${link_3_to_joint_4_damping}"/>
             <limit lower="-2.0" upper="1.5" effort="${effort_limit}" velocity="100"/>
         </joint>
