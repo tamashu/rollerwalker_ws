@@ -21,6 +21,8 @@ public:
 
 
 private:
+    const double PI = 3.14159265359;
+
     double calD_(double theta_2,double theta_3,double theta_4);   //ジョイント2からリンク4の先端までの距離
     double calZ_(double theta_2,double theta_3,double theta_4);   //ボディの高さの計算
     double calAverage(double input1, double input2);              //平均の計算

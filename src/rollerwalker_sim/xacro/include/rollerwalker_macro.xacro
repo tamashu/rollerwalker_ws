@@ -46,7 +46,7 @@
 
     <!-- 各リンクの長さ -->
     <xacro:property name="l2" value="0.2" />
-    <xacro:property name="l3" value="0.243" />
+    <xacro:property name="l3" value="0.188" />
     <xacro:property name="l4" value="0.031" />
 
     <!-- タイヤ関連 -->
@@ -91,7 +91,7 @@
 
     <!-- 各足の長さはlink_n_xの値を変えれば良い -->
     <!-- リンク2関連 -->
-    <xacro:property name="link_2_x" value="0.2" />
+    <xacro:property name="link_2_x" value="${l2}" />
     <xacro:property name="link_2_y" value="0.055" />
     <xacro:property name="link_2_z" value="0.09" />
     <!-- リンク2のイナーシャ -->
@@ -100,7 +100,7 @@
     <xacro:property name="I_link_2_zz" value="${1/12*link_2_mass*(link_2_x*link_2_x + link_2_y*link_2_y)}" />   <!--1/12m(w^2+d^2)-->
     
     <!-- リンク3関連 -->
-    <xacro:property name="link_3_x" value="0.188" />
+    <xacro:property name="link_3_x" value="${l3}" />
     <xacro:property name="link_3_y" value="0.045" />
     <xacro:property name="link_3_z" value="0.049" />
     <!-- リンク3のイナーシャ -->
@@ -109,9 +109,9 @@
     <xacro:property name="I_link_3_zz" value="${1/12*link_3_mass*(link_3_x*link_3_x + link_3_y*link_3_y)}" />   <!--1/12m(w^2+d^2)-->
     
     <!-- リンク4関連 -->
-    <xacro:property name="link_4_x" value="0.044" />
+    <xacro:property name="link_4_x" value="${l4}" />
     <xacro:property name="link_4_y" value="0.043" />
-    <xacro:property name="link_4_z" value="0.031" />
+    <xacro:property name="link_4_z" value="0.044" />
     <!-- リンク4のイナーシャ -->
     <xacro:property name="I_link_4_xx" value="${1/12*link_4_mass*(link_4_y*link_4_y + link_4_z*link_4_z)}" />   <!--1/12m(h^2+d^2)-->
     <xacro:property name="I_link_4_yy" value="${1/12*link_4_mass*(link_4_x*link_4_x + link_4_z*link_4_z)}" />   <!--1/12m(w^2+h^2)-->

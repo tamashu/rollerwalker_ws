@@ -42,7 +42,7 @@ RollerwalkerDriver::RollerwalkerDriver(double d_0, double theta_0, double omega,
     is_rollerwalk_flag_sub_ = nh_.subscribe("/is_rollerwalk_flag", 2, &RollerwalkerDriver::isRollerwalkCallback_, this);
 
     //center_zの設定（フィードバック)
-    current_center_z_sub_ = nh_.subscribe("/current_center_z", 2, &RollerwalkerDriver::currentCenterZCallback_, this);
+    current_center_z_sub_ = nh_.subscribe("/current_center_z", 1, &RollerwalkerDriver::currentCenterZCallback_, this);
 }
 
 //flag_callback
@@ -59,8 +59,8 @@ void RollerwalkerDriver::isRollerwalkCallback_(const std_msgs::Bool& msg)
 }
 
 void RollerwalkerDriver::currentCenterZCallback_(const std_msgs::Float64& msg){
-    // setCenterZ(msg.data);
-    // ROS_INFO("center_z_in callback:%f",msg.data);
+        setBackCenterZ(msg.data);
+        ROS_INFO("backCenter_z:%.4f",msg.data);
 }
 
 bool RollerwalkerDriver::getIsStartFlag_(){

@@ -75,8 +75,6 @@ void WheelOdomPub::wheelVelocityCallback_(const std_msgs::Float32MultiArray& msg
 void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
     // std_msgs::Float32MultiArray true_velocity_msg;
     std_msgs::Float64 true_velocity_msg;
-    std_msgs::Float64 current_center_z_msg;
-    
 
     true_position_[0] = msg.pose.pose.position.x;
     true_position_[1] = msg.pose.pose.position.y;
@@ -100,9 +98,7 @@ void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
         true_velocity_msg.data = V_[0];
         true_velocity_pub_.publish(true_velocity_msg);
 
-        // 現在の重心位置のパブリッシュ
-        current_center_z_msg.data = true_position_[2];
-        center_z_pub_.publish(current_center_z_msg);
+        
 
         // ROS_INFO("delta_t:%f V_x:%f  V_y:%f  V_z:%f ",delta_t,V_[0],V_[1],V_[2]);
         // ROS_INFO("V:%f",V);
@@ -120,15 +116,19 @@ void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
 //odometryのパブリッシュ
 void WheelOdomPub::timerWheelVelocityPubCallback_(const ros::TimerEvent& e){
     std_msgs::Float64 velocity_msg;
+    std_msgs::Float64 current_center_z_msg;
+
     double velocity_left = wheel_radius_*calAverage(wheel_velocity_[0]*cos(joint_position_lf_[0]),wheel_velocity_[1]*cos(joint_position_lr_[0]));       //左のタイヤの速度（平均）
     double velocity_right = -wheel_radius_ * calAverage(wheel_velocity_[2]*cos(joint_position_rr_[0]),wheel_velocity_[3]*cos(joint_position_rf_[0]));     //右のタイヤの速度（平均）（符号はマイナス）
     
-    // ROS_INFO("current_z_lr:%f",calZ_(joint_position_rf_[1],joint_position_rf_[2],joint_position_rf_[3]));
-    ROS_INFO("current_z_lr:%f",calZ_(joint_position_rr_[1],joint_position_rr_[2],joint_position_rr_[3]));
-    ROS_INFO("current_z_lr:%f",calZ_(joint_position_lr_[1],joint_position_lr_[2],joint_position_lr_[3]));
+    double front_current_z = calAverage(calZ_(joint_position_lf_[1],joint_position_lf_[2],joint_position_lf_[3]),calZ_(joint_position_rf_[1],joint_position_rf_[2],joint_position_rf_[3])); //前の高さの平均
 
     velocity_msg.data =calAverage(velocity_left , velocity_right);
     velocity_pub_.publish(velocity_msg);
+
+    // 現在の重心位置のパブリッシュ
+    current_center_z_msg.data = front_current_z;
+    center_z_pub_.publish(current_center_z_msg);
 };
 
 double WheelOdomPub::calD_(double theta_2,double theta_3,double theta_4){
@@ -136,7 +136,7 @@ double WheelOdomPub::calD_(double theta_2,double theta_3,double theta_4){
     return x_e;
 }
 double WheelOdomPub::calZ_(double theta_2,double theta_3,double theta_4){
-    double z_e = -(l2_ * sin(theta_2) - l3_ * cos(theta_2 + theta_3) - l4_ * sin(theta_2 + theta_3 + theta_4))+wheel_radius_;
+    double z_e = -(l2_ * sin(theta_2) - l3_ * cos(theta_2 + theta_3) - l4_ * cos(theta_2 + theta_3 + theta_4))+wheel_radius_;
     return z_e;
 }
 double WheelOdomPub::calAverage(double input1, double input2){

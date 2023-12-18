@@ -5,7 +5,7 @@ rollerwalker_param:
   body_width: 0.29
   #リンクの長さ
   l2: 0.2
-  l3: 0.243
+  l3: 0.188
   l4: 0.031
 
 # 計算周期

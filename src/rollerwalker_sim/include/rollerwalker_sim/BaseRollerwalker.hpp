@@ -70,7 +70,9 @@ public:
 	double getTheta4RF_();	//関節4
 
 	//重心位置のセッター
-	void setCenterZ(double center_z);
+	void setFrontCenterZ(double center_z);	//前
+	void setBackCenterZ(double center_z);	//後ろ
+
 	//theta_0のセッター
 	void setTheta_0_lf_(double theta_0_lf);
 	void setTheta_0_lr_(double theta_0_lr);
@@ -103,8 +105,8 @@ private:
 	double sideAcceleration(double t);	//横方向の加速度
 
     //関節角の計算    
-    double calTheta2(double target_d);
-    double calTheta3(double target_d,double theta2);
+    double calTheta2(double target_d, double center_z);
+    double calTheta3(double target_d,double theta2, double center_z);
     double calTheta4(double theta2,double theta3,bool is_rollerwalk);
 	double sign(double input);		//符号関数
     
@@ -125,8 +127,8 @@ private:
 	double steering_ofset_rf_;
 	
     //ローラウォーカの姿勢
-    double center_z_;                   //ローラウォーカー本体の高さ
-    double target_z;            //ローラウォーカの第四関節の終端の高さ(モードによってホイールの高さ（厚み)が変わるため）
+    double front_center_z_;                   //ローラウォーカー本体の高さ
+    double back_center_z_;                   //ローラウォーカー本体の高さ
 
     //その他パラメータ
 	double v_front;					//ローラウォーカの前方速度
@@ -139,14 +141,11 @@ private:
 	bool is_rollerWalk;				//ローラウォーク(true)か歩行か(false)
 
     //ローラウォーカの定数
-    const double l1 = 0.045;        //第一関節から第二関節まで
-    const double l2 = 0.155;        //第二関節から第三関節まで
-    const double l3 = 0.243;        //第三関節から足先まで
-    const double l4 = 0.031;        //リンク4の長さ(円の半径+ホイール側面まで)
+    const double l2_ = 0.20;        //第二関節から第三関節まで
+    const double l3_ = 0.188;        //第三関節から足先まで
+    const double l4_ = 0.031;        //リンク4の長さ(円の半径+ホイール側面まで)
     const double WHEEL_THICKNESS = 0.024;   //タイヤの厚み
     const double WHEEL_RADIUS = 0.035;       //タイヤの半径
-    const double LINK_2_LENGTH = l1+l2;                             //第二リンクの長さ
-    const double LINK_3_LENGTH = l3  -WHEEL_THICKNESS - l4;         //第三リンクの長さ(Y方向)
 
 	//各脚の関節の関数
 	//左前脚

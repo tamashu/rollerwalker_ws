@@ -33,14 +33,10 @@ BaseRollerwalker::BaseRollerwalker(double d_0, double theta_0, double omega, dou
 	this->mu_n = 10;*/
 	this->t = 0;
     this->is_rollerWalk = is_rollerWalk;
-    if (is_rollerWalk) {//ローラウォーク時
-		this->target_z = WHEEL_RADIUS;
-	}
-	else {//歩行時
-		this->target_z =l4 +  WHEEL_THICKNESS;
-	}
 
-	this->center_z_ = center_z;
+
+	this->front_center_z_ = center_z;
+	this->back_center_z_ = center_z;
 }
 double BaseRollerwalker::getOmega(){	//omegaのゲッタ
 	return omega;
@@ -99,8 +95,11 @@ double BaseRollerwalker::getTheta4RF_(){
 	return theta_4_rf_;
 }
 //重心位置のセッター
-void BaseRollerwalker::setCenterZ(double center_z){
-	center_z_ = center_z;
+void BaseRollerwalker::setFrontCenterZ(double center_z){
+	front_center_z_ = center_z;
+}
+void BaseRollerwalker::setBackCenterZ(double center_z){
+	back_center_z_ = center_z;
 }
 // theta_0のセッター
 void BaseRollerwalker::setTheta_0_lf_(double theta_0_lf){
@@ -126,31 +125,31 @@ void BaseRollerwalker::calAndSetTheta(double t){
 	double d_rf  =d_front(t,d_0_,omega);   //右前脚の長さ
 
 	if(is_rollerWalk){	//タイヤの中心がdとなるための計算
-		d_lf = d_lf - l4 - WHEEL_THICKNESS/2;
-		d_lr = d_lr - l4 - WHEEL_THICKNESS/2;
-		d_rr = d_rr - l4 - WHEEL_THICKNESS/2;
-		d_rf = d_rf - l4 - WHEEL_THICKNESS/2;
+		d_lf = d_lf - l4_ - WHEEL_THICKNESS/2;
+		d_lr = d_lr - l4_ - WHEEL_THICKNESS/2;
+		d_rr = d_rr - l4_ - WHEEL_THICKNESS/2;
+		d_rf = d_rf - l4_ - WHEEL_THICKNESS/2;
 	}
 
 	// 左前脚
 	theta_1_lf_ = theta_front(t,theta_0_lf_,omega,steering_ofset_lf_);
-	theta_2_lf_ = calTheta2(d_lf);
-	theta_3_lf_ = calTheta3(d_lf,theta_2_lf_) + PI/2;
+	theta_2_lf_ = calTheta2(d_lf,front_center_z_);
+	theta_3_lf_ = calTheta3(d_lf,theta_2_lf_,front_center_z_) + PI/2;
 	theta_4_lf_ = calTheta4(theta_2_lf_,theta_3_lf_,is_rollerWalk);
 	//左後ろ脚
 	theta_1_lr_ = theta_front(t,theta_0_lr_,omega,steering_ofset_lf_);
-	theta_2_lr_ = calTheta2(d_lr);
-	theta_3_lr_ = calTheta3(d_lr,theta_2_lr_)+ PI/2;
+	theta_2_lr_ = calTheta2(d_lr,back_center_z_);
+	theta_3_lr_ = calTheta3(d_lr,theta_2_lr_,back_center_z_)+ PI/2;
 	theta_4_lr_ = calTheta4(theta_2_lr_,theta_3_lr_,is_rollerWalk);
 	//右後ろ脚
 	theta_1_rr_ = theta_front(t,theta_0_rr_,omega,steering_ofset_lf_) ;
-	theta_2_rr_ = calTheta2(d_rr);
-	theta_3_rr_ = calTheta3(d_rr,theta_2_rr_)+ PI/2;
+	theta_2_rr_ = calTheta2(d_rr,back_center_z_);
+	theta_3_rr_ = calTheta3(d_rr,theta_2_rr_,back_center_z_)+ PI/2;
 	theta_4_rr_ = calTheta4(theta_2_rr_,theta_3_rr_,is_rollerWalk);
 	//右前脚
 	theta_1_rf_ = theta_front(t,theta_0_rf_,omega,steering_ofset_lf_);
-	theta_2_rf_ = calTheta2(d_rf);
-	theta_3_rf_ = calTheta3(d_rf,theta_2_rf_)+ PI/2;
+	theta_2_rf_ = calTheta2(d_rf,front_center_z_);
+	theta_3_rf_ = calTheta3(d_rf,theta_2_rf_,front_center_z_)+ PI/2;
 	theta_4_rf_ = calTheta4(theta_2_rf_,theta_3_rf_,is_rollerWalk);
 	// theta_1_lf = theta_front(t,theta_0,omega);
 	// theta_2_lf = calTheta2(d_lf);
@@ -276,18 +275,33 @@ double  BaseRollerwalker::sign(double input){
 	else return 0;
 }
 
-double BaseRollerwalker::calTheta2(double target_d) {
-	double numerator = pow(target_d, 2) + pow((target_z - center_z_), 2) + pow(LINK_2_LENGTH, 2) - pow(LINK_3_LENGTH, 2);
-	double denominator = 2 * LINK_2_LENGTH * sqrt(pow(target_d, 2) + pow(target_z - center_z_, 2));
+double BaseRollerwalker::calTheta2(double target_d, double center_z) {
+	double target_z;
+	if (is_rollerWalk) {//ローラウォーク時
+		target_z = WHEEL_RADIUS;
+	}
+	else {//歩行時
+		target_z =l4_ +  WHEEL_THICKNESS;
+	}
 
-	double ret = acos(numerator / denominator) + atan((target_z - center_z_) /target_d ); //atan要チェック (acos2は[0,pi])
+	double numerator = pow(target_d, 2) + pow((target_z - center_z), 2) + pow(l2_, 2) - pow(l3_, 2);
+	double denominator = 2 * l2_ * sqrt(pow(target_d, 2) + pow(target_z - center_z, 2));
+
+	double ret = acos(numerator / denominator) + atan((target_z - center_z) /target_d ); //atan要チェック (acos2は[0,pi])
 
 	return ret;
 }
 
-double BaseRollerwalker::calTheta3(double target_d, double theta2) {
-	double numerator = (target_z - center_z_) - LINK_2_LENGTH * sin(theta2);
-	double denominator = target_d - LINK_2_LENGTH * cos(theta2);
+double BaseRollerwalker::calTheta3(double target_d, double theta2,double center_z) {
+	double target_z;
+	if (is_rollerWalk) {//ローラウォーク時
+		target_z = WHEEL_RADIUS;
+	}
+	else {//歩行時
+		target_z =l4_ +  WHEEL_THICKNESS;
+	}
+	double numerator = (target_z - center_z) - l2_ * sin(theta2);
+	double denominator = target_d - l2_ * cos(theta2);
 	double ret = atan(numerator/denominator) - theta2 ; //atan要チェック
 
 	return ret;
