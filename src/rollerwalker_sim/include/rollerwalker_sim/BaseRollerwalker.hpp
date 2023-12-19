@@ -79,6 +79,12 @@ public:
 	void setTheta_0_rr_(double theta_0_rr);
 	void setTheta_0_rf_(double theta_0_rf);
 
+	//steering_ofsetのセッター
+	void setSteering_ofset_lf_(double steering_ofset);
+	void setSteering_ofset_lr_(double steering_ofset);
+	void setSteering_ofset_rr_(double steering_ofset);
+	void setSteering_ofset_rf_(double steering_ofset);
+
 private:
 	//定数
 	const double d_ofset = 0.235; //[m]

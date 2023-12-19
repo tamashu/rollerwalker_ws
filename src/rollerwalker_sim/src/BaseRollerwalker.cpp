@@ -114,7 +114,19 @@ void BaseRollerwalker::setTheta_0_rr_(double theta_0_lf){
 void BaseRollerwalker::setTheta_0_rf_(double theta_0_lf){
 	theta_0_rf_ = theta_0_lf;
 }
-
+//steering_ofsetのセッター
+void BaseRollerwalker::setSteering_ofset_lf_(double steering_ofset){
+	steering_ofset_lf_ = steering_ofset;
+}
+void BaseRollerwalker::setSteering_ofset_lr_(double steering_ofset){
+	steering_ofset_lr_ = steering_ofset;
+}
+void BaseRollerwalker::setSteering_ofset_rr_(double steering_ofset){
+	steering_ofset_rr_ = steering_ofset;
+}
+void BaseRollerwalker::setSteering_ofset_rf_(double steering_ofset){
+	steering_ofset_rf_ = steering_ofset;
+}
 
 void BaseRollerwalker::calAndSetTheta(double t){
 	this->t = t;

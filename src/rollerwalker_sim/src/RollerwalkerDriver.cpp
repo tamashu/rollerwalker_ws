@@ -59,8 +59,8 @@ void RollerwalkerDriver::isRollerwalkCallback_(const std_msgs::Bool& msg)
 }
 
 void RollerwalkerDriver::currentCenterZCallback_(const std_msgs::Float64& msg){
-        setBackCenterZ(msg.data);
-        ROS_INFO("backCenter_z:%.4f",msg.data);
+        // setBackCenterZ(msg.data);
+        // ROS_INFO("backCenter_z:%.4f",msg.data);
 }
 
 bool RollerwalkerDriver::getIsStartFlag_(){
@@ -75,14 +75,19 @@ bool RollerwalkerDriver::getChangingFlag(){
 
 void RollerwalkerDriver::jointsPublish_(double t){
     t_ = t;
+
+    // setSteering_ofset_lf_(0.3);
+    // setSteering_ofset_lr_(-0.3);
+    // setSteering_ofset_rr_(0.3);
+    // setSteering_ofset_rf_(-0.3);
+
     calAndSetTheta(t);
+
+
     std_msgs::Float64 joint1_msg;
     std_msgs::Float64 joint2_msg;
     std_msgs::Float64 joint3_msg;
     std_msgs::Float64 joint4_msg;
-
-    // setTheta_0_rf_(0);
-    // setTheta_0_rr_(0);
 
     //lf
     joint1_msg.data =getTheta1LF_();
