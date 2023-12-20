@@ -60,8 +60,8 @@ void RollerwalkerDriver::isRollerwalkCallback_(const std_msgs::Bool& msg)
 
 void RollerwalkerDriver::currentCenterZCallback_(const std_msgs::Float64& msg){
         //setFrontCenterZ(msg.data);
-        // setBackCenterZ(msg.data);
-        ROS_INFO("backCenter_z:%.4f",msg.data);
+        setBackCenterZ(msg.data);
+        // ROS_INFO("backCenter_z:%.4f",msg.data);
 }
 
 bool RollerwalkerDriver::getIsStartFlag_(){
@@ -83,8 +83,8 @@ void RollerwalkerDriver::jointsPublish_(double t){
     // setSteering_ofset_rf_(-0.3);
 
     //旋回
-    setTheta_0_rf_(0);
-    setTheta_0_rr_(0);
+    // setTheta_0_rf_(0);
+    // setTheta_0_rr_(0);
 
     calAndSetTheta(t);
     
@@ -141,19 +141,20 @@ void RollerwalkerDriver::jointsPublish_(double t){
 
 int main(int argc, char** argv)
 {
+    int cal_frequency = 50;    //Hz
     // ローラウォーカーの各ステータス
     double d_0 = 0.08;
-	double theta_0 = 0.3;
+	double theta_0 = 0.15;
 	double omega = PI;
 	double phi = PI / 2;
-	// double phi_fr = PI / 2;
-    double phi_fr = 0;
+	double phi_fr = PI / 2;
+    // double phi_fr = 0;
     double  center_z = 0.15;      
     bool is_rollerWalk = true;
 
     ros::init(argc, argv, "rollerwalker_driver");
     RollerwalkerDriver rollerwalker_driver(d_0, theta_0, omega, phi, phi_fr, center_z , is_rollerWalk);
-    ros::Rate loop_rate(50);
+    ros::Rate loop_rate(cal_frequency);
     int count = 0;
     double t =0.0;
     while (ros::ok())
@@ -163,7 +164,8 @@ int main(int argc, char** argv)
         }
         if(rollerwalker_driver.getIsStartFlag_()){
                 count++;
-                t = (double)count/50.0;
+                t = (double)count/cal_frequency;
+                ROS_INFO("t: %f",t);
         }
         if(rollerwalker_driver.getIsRollerwalk()){
                 rollerwalker_driver.jointsPublish_(t);

@@ -9,4 +9,4 @@ rollerwalker_param:
   l4: 0.031
 
 # 計算周期
-publish_frequency: 50
+publish_frequency: 100

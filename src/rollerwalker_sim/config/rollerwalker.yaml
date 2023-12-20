@@ -27,7 +27,7 @@ rollerwalker:
   joint_4_lf_trans:
     type: effort_controllers/JointPositionController
     joint: joint_4_lf
-    pid: {p: 800.0, i: 8.0, d: 1.0} #joint_4
+    pid: {p: 300.0, i: 8.0, d: 0} #joint_4
     publish_rate: 50  
     
 
@@ -54,7 +54,7 @@ rollerwalker:
   joint_4_lr_trans:
     type: effort_controllers/JointPositionController
     joint: joint_4_lr
-    pid: {p: 800.0, i: 8.0, d: 1.0} #joint_4
+    pid: {p: 300.0, i: 8.0, d: 0} #joint_4
     publish_rate: 50  
 
   # rr
@@ -79,7 +79,7 @@ rollerwalker:
   joint_4_rr_trans:
     type: effort_controllers/JointPositionController
     joint: joint_4_rr
-    pid: {p: 800.0, i: 8.0, d: 1.0} #joint_4
+    pid: {p: 300.0, i: 8.0, d: 0} #joint_4
     publish_rate: 50  
 
   # rf
@@ -104,7 +104,7 @@ rollerwalker:
   joint_4_rf_trans:
     type: effort_controllers/JointPositionController
     joint: joint_4_rf
-    pid: {p: 800.0, i: 8.0, d: 1.0} #joint_4
+    pid: {p: 300.0, i: 8.0, d: 0} #joint_4
     publish_rate: 50 
 
   #wheel
