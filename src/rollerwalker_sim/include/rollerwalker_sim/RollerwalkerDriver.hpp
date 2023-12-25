@@ -34,10 +34,16 @@ private:
     double theta_0_lr_;     //接線方向の振幅(左後ろ)         
     double theta_0_rr_;     //接線方向の振幅(右後ろ) 
     double theta_0_rf_;     //接線方向の振幅(右前) 
-	double omega_;
-	double phi_;
-    double phi_fr_;
-    double  center_z_;   
+	double omega_;          //周期関数の角加速度
+	double phi_;            //法線方向と接線方向の周期関数の位相差
+    double phi_fr_;         //前脚と後ろ足の位相差
+    double center_z_;      //ボディーの高さ
+
+    //ステアリングオフセット
+    double steering_ofset_lf;   //左前   
+    double steering_ofset_lr;   //左後ろ
+    double steering_ofset_rr;   //右後ろ
+    double steering_ofset_rf;   //右前
 
     //歩行モードへの変更時の脚の角度
     const float joint_2_limit = 0.2;

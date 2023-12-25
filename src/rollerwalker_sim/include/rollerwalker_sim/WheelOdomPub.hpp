@@ -6,7 +6,7 @@
 #include <nav_msgs/Odometry.h>
 
 #define NUM_OF_FILTERING 4
-#define MAX__MEDIAN_FILTERING_NUM 4
+#define MAX__MEDIAN_FILTERING_NUM 20
 
 class WheelOdomPub{
 public:
@@ -25,6 +25,8 @@ private:
 
     double calD_(double theta_2,double theta_3,double theta_4);   //ジョイント2からリンク4の先端までの距離
     double calZ_(double theta_2,double theta_3,double theta_4);   //ボディの高さの計算
+    std::array<float,3> quartanionToRPY(nav_msgs::Odometry msg);   //クオータニオンからRPY(オイラー角)
+
     double calAverage(double input1, double input2);              //平均の計算
     float calMovingAverage(float input_value, std::array<float,NUM_OF_FILTERING>& filterring_array, int& count, float&  sum);              //平均の計算
     float medianFilter(std::vector<float>&filtering_value,float input);
@@ -50,23 +52,30 @@ private:
     //各脚の長さd
     std::array<float,4>d_;
     //移動平均関係
-    std::array<std::vector<float>,3>filtering_velocity_;//フィルタリングの値を格納
-    std::array<int,4>wheel_counters_;
-    std::array<float,4>wheel_sums_;
+    std::array<std::array<float,NUM_OF_FILTERING>,4>filtering_wheel_velocity_;//フィルタリングの値を格納
+    std::array<int,4>wheel_counters_;                   //移動平均のカウンター
+    std::array<float,4>wheel_sums_;                     //合計
 
     // 移動中央値
-    std::array<std::array<float,NUM_OF_FILTERING>,4>filtering_wheel_velocity_;//フィルタリングの値を格納
+    std::array<std::vector<float>,3>filtering_velocity_;//フィルタリングの値を格納
+    std::array<std::vector<float>,3>filtering_rotation_velocity_;//フィルタリングの値を格納
+    
 
     //gazebo上の姿勢（真値)
-    std::array<float, 3> true_position_;    //x,y,z
+    
     std::array<float, 3> pre_true_position_;    //x,y,z
-    std::array<float, 3> true_rotation_;    //roll picth yaw
-    std::array<float, 3> delta_position_;    //delta_x,delta_y,delta_z,
+    std::array<float, 3> pre_true_rotation_;         //roll picth yaw
     std::array<float, 3> V_;    //V_x,V_y,V_z
+    std::array<float, 3> rotation_v_;    //roll', pitch', yaw'
+
+
+
+
+    
     
 
     ros::Subscriber joint_positions_lf_sub_,joint_positions_lr_sub_,joint_positions_rr_sub_,joint_positions_rf_sub_,wheel_velocity_sub_; //各関節の状態のサブスクライバ
     ros::Subscriber true_position_sub_;
-    ros::Publisher velocity_pub_,true_velocity_pub_, center_z_pub_;
+    ros::Publisher velocity_pub_,true_velocity_pub_,true_yaw_vel_pub_,center_z_pub_;
     
 };

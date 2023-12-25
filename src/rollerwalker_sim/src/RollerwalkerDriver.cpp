@@ -21,6 +21,10 @@ RollerwalkerDriver::RollerwalkerDriver(double phi, double l2, double l3, double 
     nh_.getParam("/rollerwalker_param/omega", omega_);
     nh_.getParam("/rollerwalker_param/phi_fr", phi_fr_);
     nh_.getParam("/rollerwalker_param/center_z", center_z_);
+    nh_.getParam("/rollerwalker_param/steering_ofset_lf", steering_ofset_lf);
+    nh_.getParam("/rollerwalker_param/steering_ofset_lr", steering_ofset_lr);
+    nh_.getParam("/rollerwalker_param/steering_ofset_rr", steering_ofset_rr);
+    nh_.getParam("/rollerwalker_param/steering_ofset_rf", steering_ofset_rf);
 
     phi_ = phi;
 
@@ -89,7 +93,7 @@ std::array<double, 4> RollerwalkerDriver::calAllTheta(double t, double d_0, doub
 };
 
 void RollerwalkerDriver::currentCenterZCallback_(const std_msgs::Float64& msg){
-
+    //関節から現在の高さを算出
 }
 
 bool RollerwalkerDriver::getIsStartFlag_(){
@@ -104,10 +108,10 @@ bool RollerwalkerDriver::getChangingFlag(){
 
 void RollerwalkerDriver::jointsPublish_(double t){
 
-    std::array<double ,4> theta_lf = calAllTheta(t,d_0_,theta_0_lf_,0,omega_,0,center_z_);
-    std::array<double ,4> theta_lr = calAllTheta(t,d_0_,theta_0_lr_,0,omega_,phi_fr_,center_z_);
-    std::array<double ,4> theta_rr = calAllTheta(t,d_0_,theta_0_rr_,0,omega_,phi_fr_,center_z_);
-    std::array<double ,4> theta_rf = calAllTheta(t,d_0_,theta_0_rf_,0,omega_,0,center_z_);
+    std::array<double ,4> theta_lf = calAllTheta(t,d_0_,theta_0_lf_,steering_ofset_lf,omega_,0,center_z_);
+    std::array<double ,4> theta_lr = calAllTheta(t,d_0_,theta_0_lr_,steering_ofset_lr,omega_,phi_fr_,center_z_);
+    std::array<double ,4> theta_rr = calAllTheta(t,d_0_,theta_0_rr_,steering_ofset_rr,omega_,phi_fr_,center_z_);
+    std::array<double ,4> theta_rf = calAllTheta(t,d_0_,theta_0_rf_,steering_ofset_rf,omega_,0,center_z_);
 
     std::array<std_msgs::Float64,4> joint_msgs_lf;
     std::array<std_msgs::Float64,4> joint_msgs_lr;

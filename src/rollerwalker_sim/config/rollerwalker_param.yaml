@@ -10,6 +10,11 @@ rollerwalker_param:
 #  phi_fr: 1.5707963268   #前脚と後ろ足の周期関数の位相差
  phi_fr: 0   #前脚と後ろ足の周期関数の位相差
 
+ #ステアリングオフセット
+ steering_ofset_lf: 0
+ steering_ofset_lr: 0
+ steering_ofset_rr: 0
+ steering_ofset_rf: 0
  #本体の高さ
  center_z: 0.15
  # タイヤの半径
