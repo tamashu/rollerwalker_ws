@@ -11,7 +11,7 @@
 class RollerwalkerDriver : public BaseRollerwalker
 {
 public:
-    RollerwalkerDriver(double d_0, double theta_0, double omega, double phi,  double phi_fr, double center_z, bool is_rollerWalk);
+    RollerwalkerDriver(double phi, double l2, double l3, double l4, double wheel_radius, double wheel_thickenss);
     void jointsPublish_(double t);
     void changeToWalk();
 
@@ -25,19 +25,33 @@ public:
     bool getIsRollerwalk();
     bool getChangingFlag();
 private:
+    std::array<double, 4> calAllTheta(double t, double d_0, double theta_0, double steering_ofset, double omega, double phi_fr, double center_z);
     const double PI =3.1415926535897932384626433832795;
+
+    //ローラーウォーカーの4つのパラメータ
+    double d_0_;            //法線方向の振幅
+	double theta_0_lf_;     //接線方向の振幅(左前)
+    double theta_0_lr_;     //接線方向の振幅(左後ろ)         
+    double theta_0_rr_;     //接線方向の振幅(右後ろ) 
+    double theta_0_rf_;     //接線方向の振幅(右前) 
+	double omega_;
+	double phi_;
+    double phi_fr_;
+    double  center_z_;   
+
     //歩行モードへの変更時の脚の角度
     const float joint_2_limit = 0.2;
     const float joint_3_limit = 0.1;
     const float joint_position_margine = 0.1;  //目標値のマージン
 
     ros::NodeHandle nh_;
-    double t_;       //脚軌道の時刻
+
     std::array<ros::Publisher, 4> rollerwalker_joints_pub_lf_;
     std::array<ros::Publisher, 4> rollerwalker_joints_pub_lr_;
     std::array<ros::Publisher, 4> rollerwalker_joints_pub_rr_;
     std::array<ros::Publisher, 4> rollerwalker_joints_pub_rf_;
 
+    
 
     //subscriber
     bool is_start_flag_;        //trueの時シミュレーションが動く
