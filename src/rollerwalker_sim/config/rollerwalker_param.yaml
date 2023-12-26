@@ -1,14 +1,14 @@
 rollerwalker_param:
  #ローラーウォーカーの4つのパラメータ
  d_0: 0.08              #接線方向の振幅
- theta_0_lf: 0.15       #法線方向の振幅
- theta_0_lr: 0.15       #法線方向の振幅
- theta_0_rr: 0.15       #法線方向の振幅
- theta_0_rf: 0.15       #法線方向の振幅
+ theta_0_lf: 0.30       #法線方向の振幅
+ theta_0_lr: 0.30       #法線方向の振幅
+ theta_0_rr: 0.30       #法線方向の振幅
+ theta_0_rf: 0.30       #法線方向の振幅
  omega: 3.1415926536    #周期関数の角速度(PI)
  phi: 1.5707963268      #接線方向と法線方向の周期関数の位相差
-#  phi_fr: 1.5707963268   #前脚と後ろ足の周期関数の位相差
- phi_fr: 0   #前脚と後ろ足の周期関数の位相差
+ phi_fr: 1.5707963268   #前脚と後ろ足の周期関数の位相差
+#  phi_fr: 0   #前脚と後ろ足の周期関数の位相差
 
  #ステアリングオフセット
  steering_ofset_lf: 0
@@ -29,3 +29,4 @@ rollerwalker_param:
 
 # 計算周期
 publish_frequency: 100
+file_write_frequency: 10
