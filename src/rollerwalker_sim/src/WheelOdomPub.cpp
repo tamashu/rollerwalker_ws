@@ -126,7 +126,7 @@ void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
         true_rotation_velocity_msg.data = rotation_v_[2];
         true_yaw_vel_pub_.publish(true_rotation_velocity_msg);
         
-        ROS_INFO("yaw:%f  delta_yaw:%f ",true_rotation[2], rotation_v_[2]);
+        // ROS_INFO("yaw:%f  delta_yaw:%f ",true_rotation[2], rotation_v_[2]);
     }
     else{   //0割りしてしまうときは位置だけ代入する
         for(int i=0;i<3;i++){

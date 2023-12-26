@@ -18,6 +18,8 @@
   <node name="joint_state_reciever" pkg="rollerwalker_sim" type="joint_state_reciever" output="screen"/>
   <!-- <ホイールオドメトリ -->
   <node name="wheel_odom_publisher" pkg="rollerwalker_sim" type="wheel_odom_pub" output="screen"/>
+  <!-- ファイルの記述 -->
+  <node name="file_writer" pkg="rollerwalker_sim" type="file_writer" cwd="node" output="screen"/>
   <!-- RVIZ -->
   <arg name="rvizconfig" default="$(find rollerwalker_sim)/rviz/rollerwalker.rviz" />
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />

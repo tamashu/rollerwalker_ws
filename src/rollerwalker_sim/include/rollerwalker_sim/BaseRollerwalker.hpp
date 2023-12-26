@@ -11,8 +11,8 @@
 #define CARPET_MU_t 0.057	//カーペット上の接線方向の摩擦系数
 #define CARPET_MU_n 0.61	//カーペット上の法線方向の摩擦系数
 
-#define NUM_OF_LEG 4
-//制御する脚の数
+#define NUM_OF_LEG 4		//制御する脚の数
+
 
 //パラメータ適応則の定数
 #define TOL 0.1				//目標速度の許容値

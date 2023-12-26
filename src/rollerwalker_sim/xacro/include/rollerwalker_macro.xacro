@@ -130,8 +130,6 @@
         <!-- 摩擦力 -->
     <xacro:property name="mu" value="0.417" />    
     <xacro:property name="mu_2" value="0.417" />   
-    <!-- <xacro:property name="mu" value="0.0264" />    
-    <xacro:property name="mu_2" value="0.417" />     -->
 
     <!-- めり込み係数 -->
     <xacro:property name="kp" value="100000" />
