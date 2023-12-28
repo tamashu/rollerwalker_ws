@@ -1,0 +1,7 @@
+float32 t
+float32 velocity_x
+float32 velocity_y
+float32 velocity_z
+float32 roll_velocity
+float32 pitch_velocity
+float32 yaw_velocity

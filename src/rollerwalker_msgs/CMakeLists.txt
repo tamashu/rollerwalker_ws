@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(rollerwalker_sim)
+project(rollerwalker_msgs)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -7,14 +7,11 @@ project(rollerwalker_sim)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED
+find_package(catkin REQUIRED COMPONENTS
     roscpp
     rospy
     std_msgs
-    tf
-    tf2
-    tf2_ros
-    rollerwalker_msgs
+    message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -51,11 +48,11 @@ find_package(catkin REQUIRED
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  Velocity.msg
+  Position.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -72,10 +69,10 @@ find_package(catkin REQUIRED
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs  # Or other packages containing msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -107,9 +104,9 @@ find_package(catkin REQUIRED
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
- INCLUDE_DIRS include
- LIBRARIES rollerwalker_sim
- CATKIN_DEPENDS roscpp rospy std_msgs tf
+#  INCLUDE_DIRS include
+#  LIBRARIES rollerwalker_msgs
+CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -120,13 +117,13 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-include
-    ${catkin_INCLUDE_DIRS}
+# include
+# ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/rollerwalker_sim.cpp
+#   src/${PROJECT_NAME}/rollerwalker_msgs.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -137,7 +134,7 @@ include
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/rollerwalker_sim_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/rollerwalker_msgs_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -201,53 +198,10 @@ include
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_rollerwalker_sim.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_rollerwalker_msgs.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-
-#rollerwalker_driver関連
-add_library(BaseRollerwalker src/BaseRollerwalker.cpp)
-add_executable(rollerwalker_driver src/RollerwalkerDriver.cpp)
-target_link_libraries(rollerwalker_driver
-  ${catkin_LIBRARIES} BaseRollerwalker
-)
-
-#キーボード関連
-add_executable(my_teleop_twist_keyboard src/my_teleop_twist_keyboard.cpp)
-target_link_libraries(my_teleop_twist_keyboard
-  ${catkin_LIBRARIES} 
-)
-
-# joint_state_reciever関連
-add_executable(joint_state_reciever src/joint_state_reciever.cpp)
-target_link_libraries(joint_state_reciever
-  ${catkin_LIBRARIES} 
-)
-
-#wheel_odom_publisher関連
-add_executable(wheel_odom_pub src/WheelOdomPub.cpp)
-target_link_libraries(wheel_odom_pub
-  ${catkin_LIBRARIES} 
-)
-add_dependencies(wheel_odom_pub ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-#file_writer関連
-add_library(file_handler src/file_handler.cpp)
-add_executable(file_writer src/fileWriter.cpp)
-target_link_libraries(file_writer
-  ${catkin_LIBRARIES} file_handler
-)
-
-
-
-
-
-
-
-
-
-

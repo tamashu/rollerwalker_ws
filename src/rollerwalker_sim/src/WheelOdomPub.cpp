@@ -4,6 +4,8 @@
 #include <std_msgs/Float64.h>
 #include <tf/tf.h>
 #include <geometry_msgs/Pose2D.h>
+#include <rollerwalker_msgs/Velocity.h>
+#include <rollerwalker_msgs/Position.h>
 
 WheelOdomPub::WheelOdomPub():nh_("~")
 {
@@ -13,6 +15,8 @@ WheelOdomPub::WheelOdomPub():nh_("~")
     nh_.getParam("/rollerwalker_param/wheel_radius", wheel_radius_);
     nh_.getParam("/rollerwalker_param/body_width", body_width_);
     nh_.getParam("/publish_frequency", publish_frequency_);
+
+    start_time_ = ros::Time::now();
 
     //jointの状態を受け取るサブスクライバの設定
     joint_positions_lf_sub_ = nh_.subscribe("/joint_positions_lf", 5, &WheelOdomPub::jointPositionLFCallback_, this);
@@ -25,8 +29,8 @@ WheelOdomPub::WheelOdomPub():nh_("~")
 
     //publidherの設定
     velocity_pub_ = nh_.advertise<std_msgs::Float64>("/velocity", 5);
-    true_velocity_pub_ = nh_.advertise<std_msgs::Float64>("/true_velocity", 5);
-    true_yaw_vel_pub_ = nh_.advertise<std_msgs::Float64>("/true_yaw_velocity", 5);
+    true_velocity_pub_ = nh_.advertise<rollerwalker_msgs::Velocity>("/true_velocity", 5);
+    true_position_pub_ = nh_.advertise<rollerwalker_msgs::Position>("/true_position_x_y_z", 5);
     center_z_pub_ = nh_.advertise<std_msgs::Float64>("/current_center_z", 1);
 
     //timercallbavkの設定
@@ -85,15 +89,21 @@ void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
     std::array<float, 3> true_rotation;        //roll picth yaw
     std::array<float, 3> delta_position;       //delta_x,delta_y,delta_z,
     std::array<float, 3> delta_rotation;       //delta_roll, delta_pich, delta_yaw
+    std::array<float, 3> V;    //V_x,V_y,V_z
+    std::array<float, 3> rotation_v;    //roll', pitch', yaw'
 
-    std_msgs::Float64 true_velocity_msg;
-    std_msgs::Float64 true_rotation_velocity_msg;
+    rollerwalker_msgs::Velocity true_velocity_msg;
+    rollerwalker_msgs::Position true_position_msg;
+
+    //経過時間の計算
+    ros::Duration duration = (ros::Time::now() - start_time_);
+    double time = duration.sec + duration.nsec/pow(10,9);
 
     true_position[0] = msg.pose.pose.position.x;
     true_position[1] = msg.pose.pose.position.y;
     true_position[2] = msg.pose.pose.position.z;
 
-    true_rotation = quartanionToRPY(msg);
+    true_rotation = quartanionToRPY(msg);   
     
     float delta_t = (ros::Time::now() - pre_time).toSec();
     if(delta_t>0){ //delta_t=0を避けるため
@@ -101,32 +111,32 @@ void WheelOdomPub::truePositionCallback_(const  nav_msgs::Odometry& msg){
             //速度計算
             delta_position[i] = true_position[i] - pre_true_position_[i];
             float v_tmp = delta_position[i] / delta_t;       //v = dx /dt
-            V_[i] = medianFilter(filtering_velocity_[i],v_tmp);
+            V[i] = medianFilter(filtering_velocity_[i],v_tmp);
             pre_true_position_[i] = true_position[i]; //現情報を前情報に代入
 
             ////回転の計算
             delta_rotation[i] = true_rotation[i] - pre_true_rotation_[i];
             float rotation_v_tmp = delta_rotation[i] / delta_t;       //v = dx /dt
-            rotation_v_[i] = medianFilter(filtering_rotation_velocity_[i],rotation_v_tmp);
+            rotation_v[i] = medianFilter(filtering_rotation_velocity_[i],rotation_v_tmp);
             pre_true_rotation_[i] = true_rotation[i]; //現情報を前情報に代入
         }
 
-        //各軸に対する速度
-        // std::vector<float> pub_data(V_.begin(),V_.end());
-        // true_velocity_msg.data =pub_data;
-
-        //速度
-        float V = sqrt(pow(V_[0],2)+pow(V_[1],2));
-
         //速度のパブリッシュ
-        true_velocity_msg.data = V;
+        true_velocity_msg.t = time;
+        true_velocity_msg.velocity_x =V[0];
+        true_velocity_msg.velocity_y =V[1];
+        true_velocity_msg.velocity_z =V[2];
+        true_velocity_msg.roll_velocity = rotation_v[0];
+        true_velocity_msg.pitch_velocity = rotation_v[1];
+        true_velocity_msg.yaw_velocity = rotation_v[2];
         true_velocity_pub_.publish(true_velocity_msg);
-
-        //yaw角の速度のパブリッシュ
-        true_rotation_velocity_msg.data = rotation_v_[2];
-        true_yaw_vel_pub_.publish(true_rotation_velocity_msg);
         
-        // ROS_INFO("yaw:%f  delta_yaw:%f ",true_rotation[2], rotation_v_[2]);
+        //位置のパブリッシュ
+        true_position_msg.t = time;
+        true_position_msg.x = true_position[0];
+        true_position_msg.y = true_position[1];
+        true_position_msg.z = true_position[2];
+        true_position_pub_.publish(true_position_msg);
     }
     else{   //0割りしてしまうときは位置だけ代入する
         for(int i=0;i<3;i++){

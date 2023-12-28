@@ -4,4 +4,4 @@ build/
 devel/
 logs/
 .vscode/
-*/*.csv
+*.csv

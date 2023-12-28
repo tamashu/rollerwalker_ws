@@ -19,7 +19,6 @@ public:
     void truePositionCallback_(const nav_msgs::Odometry& msg);
     void timerWheelVelocityPubCallback_(const ros::TimerEvent& e);
 
-
 private:
     const double PI = 3.14159265359;
 
@@ -34,6 +33,7 @@ private:
     ros::NodeHandle nh_;
     ros::Timer timer_;
     ros::Time pre_time;
+    ros::Time start_time_;  //rosの開始時間
     int publish_frequency_;  //パブリッシュの周期
 
     double l2_;
@@ -65,9 +65,9 @@ private:
     std::array<float, 3> pre_true_rotation_;         //roll picth yaw
     std::array<float, 3> V_;    //V_x,V_y,V_z
     std::array<float, 3> rotation_v_;    //roll', pitch', yaw'
-
+    
     ros::Subscriber joint_positions_lf_sub_,joint_positions_lr_sub_,joint_positions_rr_sub_,joint_positions_rf_sub_,wheel_velocity_sub_; //各関節の状態のサブスクライバ
     ros::Subscriber true_position_sub_;
-    ros::Publisher velocity_pub_,true_velocity_pub_,true_yaw_vel_pub_,center_z_pub_;
+    ros::Publisher velocity_pub_,true_velocity_pub_,center_z_pub_,true_position_pub_;
     
 };

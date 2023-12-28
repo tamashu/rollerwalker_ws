@@ -21,7 +21,7 @@
   <!-- ファイルの記述 -->
   <node name="file_writer" pkg="rollerwalker_sim" type="file_writer" cwd="node" output="screen"/>
   <!-- RVIZ -->
-  <arg name="rvizconfig" default="$(find rollerwalker_sim)/rviz/rollerwalker.rviz" />
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+  <!-- <arg name="rvizconfig" default="$(find rollerwalker_sim)/rviz/rollerwalker.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
   
 </launch>
