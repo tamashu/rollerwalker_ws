@@ -1,23 +1,23 @@
 # 計算周期
-publish_frequency: 100
-file_write_frequency: 10
+publish_frequency: 200
+file_write_frequency: 100
 
 #ファイル名
-velocity_file_name: "/home/lab/rollerwalker_ws/src/rollerwalker_sim/data/true_velocity.csv"
-position_file_name: "/home/lab/rollerwalker_ws/src/rollerwalker_sim/data/true_position.csv"
+position_file_name: "/home/lab/Desktop/卒検/sim_data/straight phi_fr=PI_2/d=0.08/true_position.csv"
+velocity_file_name: "/home/lab/Desktop/卒検/sim_data/straight phi_fr=PI_2/d=0.08/true_velocity.csv"
 
 #ローラーウォーカー関連
 rollerwalker_param:
  #ローラーウォーカーの4つのパラメータ
  d_0: 0.08              #接線方向の振幅
  theta_0_lf: 0.30       #法線方向の振幅
- theta_0_lr: 0.30       #法線方向の振幅
+ theta_0_lr: 0.30       #法線方向の振幅1
  theta_0_rr: 0.30       #法線方向の振幅
  theta_0_rf: 0.30       #法線方向の振幅
  omega: 3.1415926536    #周期関数の角速度(PI)
  phi: 1.5707963268      #接線方向と法線方向の周期関数の位相差
  phi_fr: 1.5707963268   #前脚と後ろ足の周期関数の位相差
- phi_fr: 0   #前脚と後ろ足の周期関数の位相差
+#  phi_fr: 0   #前脚と後ろ足の周期関数の位相差
 
  #ステアリングオフセット
  steering_ofset_lf: 0

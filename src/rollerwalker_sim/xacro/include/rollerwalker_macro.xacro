@@ -138,7 +138,7 @@
     <xacro:property name="effort_limit" value="100000" />
 
     <!-- gazebo上の位置のパブリッシュレート -->
-    <xacro:property name="gazebo_position_publish_rate" value="50" />
+    <xacro:property name="gazebo_position_publish_rate" value="100" />
     
 
 </robot>

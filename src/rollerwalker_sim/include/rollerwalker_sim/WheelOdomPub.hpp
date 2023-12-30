@@ -63,8 +63,7 @@ private:
     //gazebo上の姿勢（真値)
     std::array<float, 3> pre_true_position_;    //x,y,z
     std::array<float, 3> pre_true_rotation_;         //roll picth yaw
-    std::array<float, 3> V_;    //V_x,V_y,V_z
-    std::array<float, 3> rotation_v_;    //roll', pitch', yaw'
+    
     
     ros::Subscriber joint_positions_lf_sub_,joint_positions_lr_sub_,joint_positions_rr_sub_,joint_positions_rf_sub_,wheel_velocity_sub_; //各関節の状態のサブスクライバ
     ros::Subscriber true_position_sub_;
