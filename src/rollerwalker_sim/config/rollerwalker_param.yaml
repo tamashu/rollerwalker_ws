@@ -3,27 +3,36 @@ publish_frequency: 200
 file_write_frequency: 100
 
 #ファイル名
-position_file_name: "/home/lab/Desktop/卒検/sim_data/straight phi_fr=PI_2/d=0.08/true_position.csv"
-velocity_file_name: "/home/lab/Desktop/卒検/sim_data/straight phi_fr=PI_2/d=0.08/true_velocity.csv"
+position_file_name: "/home/lab/Desktop/卒検/sim_data/斜行//true_position.csv"
+velocity_file_name: "/home/lab/Desktop/卒検/sim_data/斜行//true_velocity.csv"
 
 #ローラーウォーカー関連
 rollerwalker_param:
  #ローラーウォーカーの4つのパラメータ
- d_0: 0.08              #接線方向の振幅
+ d_0: 0.05              #接線方向の振幅
  theta_0_lf: 0.30       #法線方向の振幅
- theta_0_lr: 0.30       #法線方向の振幅1
+ theta_0_lr: 0.30       #法線方向の振幅
  theta_0_rr: 0.30       #法線方向の振幅
  theta_0_rf: 0.30       #法線方向の振幅
- omega: 3.1415926536    #周期関数の角速度(PI)
+
+#  omega: 0.78539816339    #周期関数の角速度(PI/4)
+#  omega: 1.57079632679    #周期関数の角速度(PI/2)
+#  omega: 2.35619449019    #周期関数の角速度(3PI/4)
+ omega: 3.14159265359    #周期関数の角速度(PI)
+#  omega: 3.92699081699    #周期関数の角速度(5PI/4)
+#  omega: 4.71238898038    #周期関数の角速度(3PI/2)
+#  omega: 5.49778714378    #周期関数の角速度(7PI4)
+#  omega: 6.28318530718    #周期関数の角速度(2PI)
+
  phi: 1.5707963268      #接線方向と法線方向の周期関数の位相差
- phi_fr: 1.5707963268   #前脚と後ろ足の周期関数の位相差
-#  phi_fr: 0   #前脚と後ろ足の周期関数の位相差
+#  phi_fr: 1.5707963268   #前脚と後ろ足の周期関数の位相差
+ phi_fr: 0   #前脚と後ろ足の周期関数の位相差
 
  #ステアリングオフセット
- steering_ofset_lf: 0
- steering_ofset_lr: 0
- steering_ofset_rr: 0
- steering_ofset_rf: 0
+ steering_ofset_lf: 0.30
+ steering_ofset_lr: -0.30
+ steering_ofset_rr: 0.30
+ steering_ofset_rf: -0.30
 
  #本体の高さ
  center_z: 0.15

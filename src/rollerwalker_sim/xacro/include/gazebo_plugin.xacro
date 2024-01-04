@@ -1,0 +1,51 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/rollerwalker</robotNamespace>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            <legacyModeNS>true</legacyModeNS>
+        </plugin>
+
+        <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+            <frameName>world</frameName>
+            <bodyName>rollerwalker::base_link</bodyName>
+            <topicName>/true_position</topicName>
+            <updateRate>${gazebo_position_publish_rate}</updateRate>
+        </plugin>
+
+        <plugin name='3dplot' filename='libLinkPlot3DPlugin.so'>
+            <!-- Update at 10 Hz -->
+            <frequency>10</frequency>
+            <!-- 本体リンクの軌跡 -->
+            <plot>
+                <link>rollerwalker::base_link</link>    <!--リンク名-->
+                <pose>0 0 0 0 0 0</pose>                <!--プロット位置（フレームからの位置）-->
+                <material>Gazebo/Blue</material>        <!--プロットの色-->
+            </plot>
+            <!-- 左前タイヤの軌跡 -->
+            <plot>
+                <link>rollerwalker::wheel_lf</link>     <!--リンク名-->
+                <pose>0 0 0 0 0 0</pose>                <!--プロット位置（フレームからの位置）-->
+                <material>Gazebo/Red</material>         <!--プロットの色-->
+            </plot>
+            <!-- 左後ろタイヤの軌跡 -->
+            <plot>
+                <link>rollerwalker::wheel_lr</link>     <!--リンク名-->
+                <pose>0 0 0 0 0 0</pose>                <!--プロット位置（フレームからの位置）-->
+                <material>Gazebo/Red</material>         <!--プロットの色-->
+            </plot>
+            <!-- 右後ろタイヤの軌跡 -->
+            <plot>
+                <link>rollerwalker::wheel_rr</link>     <!--リンク名-->
+                <pose>0 0 0 0 0 0</pose>                <!--プロット位置（フレームからの位置）-->
+                <material>Gazebo/Red</material>         <!--プロットの色-->
+            </plot>
+            <!-- 右前タイヤの軌跡 -->
+            <plot>
+                <link>rollerwalker::wheel_rf</link>     <!--リンク名-->
+                <pose>0 0 0 0 0 0</pose>                <!--プロット位置（フレームからの位置）-->
+                <material>Gazebo/Red</material>         <!--プロットの色-->
+            </plot>
+        </plugin>
+    </gazebo>
+</robot>

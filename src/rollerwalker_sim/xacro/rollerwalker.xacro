@@ -1,5 +1,6 @@
 <robot name="rollerwalker" xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:include filename="$(find rollerwalker_sim)/xacro/include/leg_macro.xacro" />
+    <xacro:include filename="$(find rollerwalker_sim)/xacro/include/gazebo_plugin.xacro" />
 
     <!-- 本体の描画 -->
     <link name="base_link">
@@ -44,18 +45,5 @@
     <xacro:leg_macro leg_posi="rr"/>
     <xacro:leg_macro leg_posi="rf"/>
 
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/rollerwalker</robotNamespace>
-            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-            <legacyModeNS>true</legacyModeNS>
-        </plugin>
-
-        <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
-            <frameName>world</frameName>
-            <bodyName>base_link</bodyName>
-            <topicName>/true_position</topicName>
-            <updateRate>${gazebo_position_publish_rate}</updateRate>
-        </plugin>
-    </gazebo>
+    
 </robot>

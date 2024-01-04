@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
     <arg name="model" default="$(find rollerwalker_sim)/xacro/rollerwalker.xacro" />
+    
 
     <arg name="is_paused" default="false"/>
 
     <!-- gazeboの起動 -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find rollerwalker_sim)/world/test_world.world"/>
         <arg name="paused" value="$(arg is_paused)"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
@@ -15,7 +17,7 @@
 
     <!-- ロボットモデルをrobot_descriptionにload -->
     <param name="robot_description" command="$(find xacro)/xacro $(arg model) --inorder"/>
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker -z 0.6" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model rollerwalker -z 0.3" />
 
     
     <!-- コントローラの起動 -->
