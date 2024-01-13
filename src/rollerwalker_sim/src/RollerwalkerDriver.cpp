@@ -152,7 +152,6 @@ int main(int argc, char** argv)
     nh.getParam("/rollerwalker_param/wheel_radius", wheel_radius);
     nh.getParam("/rollerwalker_param/wheel_thicness", wheel_thickness);
 
-    
     nh.getParam("/publish_frequency", publish_frequency);
     
 

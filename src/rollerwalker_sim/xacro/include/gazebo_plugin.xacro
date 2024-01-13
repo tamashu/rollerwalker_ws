@@ -32,13 +32,13 @@
             <plot>
                 <link>rollerwalker::wheel_lr</link>     <!--リンク名-->
                 <pose>0 0 0 0 0 0</pose>                <!--プロット位置（フレームからの位置）-->
-                <material>Gazebo/Red</material>         <!--プロットの色-->
+                <material>Gazebo/Green</material>         <!--プロットの色-->
             </plot>
             <!-- 右後ろタイヤの軌跡 -->
             <plot>
                 <link>rollerwalker::wheel_rr</link>     <!--リンク名-->
                 <pose>0 0 0 0 0 0</pose>                <!--プロット位置（フレームからの位置）-->
-                <material>Gazebo/Red</material>         <!--プロットの色-->
+                <material>Gazebo/Green</material>         <!--プロットの色-->
             </plot>
             <!-- 右前タイヤの軌跡 -->
             <plot>
