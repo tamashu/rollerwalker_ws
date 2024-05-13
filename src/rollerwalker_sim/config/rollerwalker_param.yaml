@@ -3,15 +3,15 @@ publish_frequency: 200
 file_write_frequency: 100
 
 #ファイル名
-position_file_name: "/home/lab/Desktop/卒検/sim_data/pivot_turn/omega/omega=2PI/true_position.csv"
-velocity_file_name: "/home/lab/Desktop/卒検/sim_data/pivot_turn/omega/omega=2PI/true_velocity.csv"
+position_file_name: "/home/lab/Desktop/true_position3.csv"
+velocity_file_name: "/home/lab/Desktop/true_velocity3.csv"
 
 #ローラーウォーカー関連
 rollerwalker_param:
  #ローラーウォーカーの4つのパラメータ
- d_0: 0.08              #接線方向の振幅
- theta_0_lf: -0.30       #法線方向の振幅
- theta_0_lr: -0.30       #法線方向の振幅
+ d_0: 0.06              #接線方向の振幅
+ theta_0_lf: 0.30       #法線方向の振幅
+ theta_0_lr: 0.30       #法線方向の振幅
  theta_0_rr: 0.30       #法線方向の振幅
  theta_0_rf: 0.30       #法線方向の振幅
 
@@ -37,11 +37,11 @@ rollerwalker_param:
 
  
 
- #ステアリングオフセット
- steering_ofset_lf: 0.20
- steering_ofset_lr: -0.20
- steering_ofset_rr: -0.20
- steering_ofset_rf: 0.20
+#ステアリングオフセット
+ steering_ofset_lf: 0.0
+ steering_ofset_lr: 0.0
+ steering_ofset_rr: 0.0
+ steering_ofset_rf: 0.0
 
  #本体の高さ
  center_z: 0.15

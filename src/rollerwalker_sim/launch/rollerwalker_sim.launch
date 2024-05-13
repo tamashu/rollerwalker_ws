@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <arg name="isPaused" default="false"/>
-  <arg name="isWriteFile" default="true"/>
+  <arg name="isPaused" default="true"/>
   
   <rosparam command="load" file="$(find rollerwalker_sim)/config/rollerwalker_param.yaml"/>
   <!-- シミュレーション時間の使用 -->
@@ -19,11 +18,6 @@
   <node name="joint_state_reciever" pkg="rollerwalker_sim" type="joint_state_reciever" output="screen"/>
   <!-- <ホイールオドメトリ -->
   <node name="wheel_odom_publisher" pkg="rollerwalker_sim" type="wheel_odom_pub" output="screen"/>
-
-  <!-- ファイルの記述 -->
-  <group if="$(arg isWriteFile)">
-    <node name="file_writer" pkg="rollerwalker_sim" type="file_writer" cwd="node" output="screen"/>  
-  </group>
   
   <!-- RVIZ -->
   <!-- <arg name="rvizconfig" default="$(find rollerwalker_sim)/rviz/rollerwalker.rviz" />
