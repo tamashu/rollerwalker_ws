@@ -1,4 +1,4 @@
-#include "rollerwalker_sim/joint_state_reciver.hpp"
+#include "straight_forward/joint_state_reciver.hpp"
 
 JointStateReciever::JointStateReciever(){
     nh_.getParam("/publish_frequency", publish_frequency_);

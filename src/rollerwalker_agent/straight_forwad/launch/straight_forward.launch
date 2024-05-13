@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <launch>
+
+    <include file="$(find rollerwalker_bringup)/launch/rollerwalker_bringup.launch"/>
+
+  <!-- キーボード操作 -->
+  <node name="my_teleop_key_board" pkg="straight_forwad" type="my_teleop_twist_keyboard"/>
+  <!-- ドライバーの起動（速度司令） -->
+  <node name="rollerwalker_driver" pkg="straight_forwad" type="rollerwalker_driver" output="screen"/>
+  <!-- joint_recieverの起動(gazeboからの状態の取得) -->
+  <node name="joint_state_reciever" pkg="straight_forwad" type="joint_state_reciever" output="screen"/>
+  <!-- <ホイールオドメトリ -->
+  <node name="wheel_odom_publisher" pkg="straight_forwad" type="wheel_odom_pub" output="screen"/>
+</launch>
