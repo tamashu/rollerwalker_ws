@@ -3,7 +3,6 @@
   <arg name="isPaused" default="true"/>
   <arg name="rviz" default="false"/>
   
-  <rosparam command="load" file="$(find rollerwalker_sim)/config/rollerwalker_param.yaml"/>
   <!-- シミュレーション時間の使用 -->
   <param name="/use_sim_time" value="true" />
   <!-- gazebo関連 -->
